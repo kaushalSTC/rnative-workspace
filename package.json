@@ -1,0 +1,32 @@
+{
+  "name": "rnative-workspace",
+  "version": "1.0.0",
+  "description": "React Native monorepo workspace containing CLI tools and utilities",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "clean": "pnpm -r run clean",
+    "dev": "pnpm -r run dev",
+    "expo-starter": "pnpm --filter @kaushalrathour/expo-starter run",
+    "prepare": "pnpm -r run prepare"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "monorepo",
+    "cli",
+    "workspace"
+  ],
+  "author": {
+    "name": "Kaushal Rathour",
+    "url": "https://github.com/kaushalrathour"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@10.14.0",
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

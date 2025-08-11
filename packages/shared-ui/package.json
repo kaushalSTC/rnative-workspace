@@ -1,0 +1,54 @@
+{
+  "name": "@kaushalrathour/shared-ui",
+  "version": "1.0.0",
+  "description": "Shared UI components and theming for React Native apps",
+  "main": "index.js",
+  "files": [
+    "src",
+    "index.js",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"No linting configured\" && exit 0",
+    "build": "echo \"No build script configured\" && exit 0",
+    "clean": "echo \"No clean script configured\" && exit 0",
+    "prepublishOnly": "echo \"Preparing for publish\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaushalrathour/rnative-workspace.git",
+    "directory": "packages/shared-ui"
+  },
+  "homepage": "https://github.com/kaushalrathour/rnative-workspace#readme",
+  "bugs": {
+    "url": "https://github.com/kaushalrathour/rnative-workspace/issues"
+  },
+  "keywords": [
+    "react-native",
+    "ui",
+    "components",
+    "theming",
+    "shared",
+    "expo",
+    "typescript"
+  ],
+  "author": {
+    "name": "Kaushal Rathour",
+    "url": "https://github.com/kaushalrathour"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.70.0"
+  },
+  "dependencies": {
+    "react-native-size-matters": "^0.4.2"
+  }
+}

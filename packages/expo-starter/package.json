@@ -1,0 +1,52 @@
+{
+  "name": "@kaushalrathour/expo-starter",
+  "version": "3.0.0",
+  "description": "Bootstrap a custom React Native Expo app with predefined template and dependencies using create-expo-app",
+  "bin": {
+    "expo-starter": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "overrides",
+    "README.md",
+    "SCRIPTS.md"
+  ],
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"No linting configured\" && exit 0",
+    "prepare": "echo \"Package prepared for publishing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaushalrathour/expo-starter.git"
+  },
+  "homepage": "https://github.com/kaushalrathour/expo-starter#readme",
+  "bugs": {
+    "url": "https://github.com/kaushalrathour/expo-starter/issues"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "bootstrap",
+    "cli",
+    "template",
+    "starter",
+    "typescript",
+    "navigation",
+    "redux"
+  ],
+  "author": {
+    "name": "Kaushal Rathour",
+    "url": "https://github.com/kaushalrathour"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "execa": "^9.6.0",
+    "fs-extra": "^11.3.0"
+  }
+}
