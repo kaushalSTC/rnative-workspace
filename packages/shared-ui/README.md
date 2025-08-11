@@ -1,4 +1,4 @@
-# @kaushalrathour/shared-ui
+# @kaushalstc/shared-ui
 
 Shared UI components and theming system for React Native apps.
 
@@ -13,9 +13,9 @@ Shared UI components and theming system for React Native apps.
 ## 📦 Installation
 
 ```bash
-npm install @kaushalrathour/shared-ui
+npm install @kaushalstc/shared-ui
 # or
-yarn add @kaushalrathour/shared-ui
+yarn add @kaushalstc/shared-ui
 ```
 
 ### Peer Dependencies
@@ -32,7 +32,7 @@ npm install react react-native
 
 ```tsx
 import React from 'react';
-import { ThemeProvider } from '@kaushalrathour/shared-ui';
+import { ThemeProvider } from '@kaushalstc/shared-ui';
 import { YourApp } from './YourApp';
 
 export default function App() {
@@ -49,7 +49,7 @@ export default function App() {
 ```tsx
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Text, Button, Card, useTheme } from '@kaushalrathour/shared-ui';
+import { Text, Button, Card, useTheme } from '@kaushalstc/shared-ui';
 
 export const HomeScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -78,7 +78,7 @@ export const HomeScreen = ({ navigation }) => {
 ### Button
 
 ```tsx
-import { Button } from '@kaushalrathour/shared-ui';
+import { Button } from '@kaushalstc/shared-ui';
 
 <Button 
   title="Click me" 
@@ -93,7 +93,7 @@ import { Button } from '@kaushalrathour/shared-ui';
 ### Card
 
 ```tsx
-import { Card } from '@kaushalrathour/shared-ui';
+import { Card } from '@kaushalstc/shared-ui';
 
 <Card 
   padding="medium"      // none | small | medium | large
@@ -107,7 +107,7 @@ import { Card } from '@kaushalrathour/shared-ui';
 ### Text
 
 ```tsx
-import { Text } from '@kaushalrathour/shared-ui';
+import { Text } from '@kaushalstc/shared-ui';
 
 <Text 
   variant="body"        // body | caption | heading | subheading | title
@@ -124,7 +124,7 @@ import { Text } from '@kaushalrathour/shared-ui';
 ### Using the built-in themes
 
 ```tsx
-import { ThemeProvider, defaultLightTheme, defaultDarkTheme } from '@kaushalrathour/shared-ui';
+import { ThemeProvider, defaultLightTheme, defaultDarkTheme } from '@kaushalstc/shared-ui';
 
 // Light theme (default)
 <ThemeProvider initialTheme={defaultLightTheme}>
@@ -140,7 +140,7 @@ import { ThemeProvider, defaultLightTheme, defaultDarkTheme } from '@kaushalrath
 ### Creating custom themes
 
 ```tsx
-import { createTheme, ThemeProvider } from '@kaushalrathour/shared-ui';
+import { createTheme, ThemeProvider } from '@kaushalstc/shared-ui';
 
 const customTheme = createTheme(false, {
   colors: {
@@ -158,7 +158,7 @@ const customTheme = createTheme(false, {
 ### Accessing theme in components
 
 ```tsx
-import { useTheme } from '@kaushalrathour/shared-ui';
+import { useTheme } from '@kaushalstc/shared-ui';
 
 export const MyComponent = () => {
   const theme = useTheme();
@@ -176,7 +176,7 @@ export const MyComponent = () => {
 ## 🔄 React Navigation Integration
 
 ```tsx
-import { useTheme } from '@kaushalrathour/shared-ui';
+import { useTheme } from '@kaushalstc/shared-ui';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -221,7 +221,7 @@ export const Navigator = () => {
 
 ## 🤝 Contributing
 
-Issues and PRs welcome! See the [main repository](https://github.com/kaushalrathour/rnative-workspace).
+Issues and PRs welcome! See the [main repository](https://github.com/kaushalSTC/rnative-workspace).
 
 ## 📄 License
 

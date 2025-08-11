@@ -1,6 +1,6 @@
 {
-  "name": "@kaushalrathour/cli-starter",
-  "version": "1.0.0",
+  "name": "@kaushalstc/cli-starter",
+  "version": "1.0.1",
   "description": "CLI starter utilities",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   ],
   "author": {
     "name": "Kaushal Rathour",
-    "url": "https://github.com/kaushalrathour"
+    "url": "https://github.com/kaushalSTC"
   },
   "license": "MIT",
   "engines": {

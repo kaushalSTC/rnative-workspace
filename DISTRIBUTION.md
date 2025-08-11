@@ -9,9 +9,9 @@ There are several ways developers can use your expo-starter and shared packages,
 **For expo-starter (CLI):**
 ```bash
 # Already published - developers can use:
-npm install -g @kaushalrathour/expo-starter
+npm install -g @kaushalstc/expo-starter
 # or
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 ```
 
 **For shared packages (after publishing):**
@@ -24,7 +24,7 @@ cd packages/shared-logic
 npm publish
 
 # Then developers install them:
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### **Option 2: Private npm Registry (Enterprise)**
@@ -36,7 +36,7 @@ If you're using this for a company or want to keep packages private:
 npm publish --registry https://your-private-registry.com
 
 # Developers install with:
-npm install @kaushalrathour/shared-ui --registry https://your-private-registry.com
+npm install @kaushalstc/shared-ui --registry https://your-private-registry.com
 ```
 
 ### **Option 3: GitHub Packages**
@@ -46,15 +46,15 @@ npm install @kaushalrathour/shared-ui --registry https://your-private-registry.c
 npm publish --registry https://npm.pkg.github.com
 
 # Developers install with:
-npm install @kaushalrathour/shared-ui --registry https://npm.pkg.github.com
+npm install @kaushalstc/shared-ui --registry https://npm.pkg.github.com
 ```
 
 ### **Option 4: Direct Git Installation**
 
 ```bash
 # Install directly from GitHub
-npm install github:kaushalrathour/rnative-workspace#packages/shared-ui
-npm install github:kaushalrathour/rnative-workspace#packages/shared-logic
+npm install github:kaushalSTC/rnative-workspace#packages/shared-ui
+npm install github:kaushalSTC/rnative-workspace#packages/shared-logic
 ```
 
 ## 🎯 **Complete Developer Workflow**
@@ -64,7 +64,7 @@ Here's exactly what a developer does to use your system:
 ### **Step 1: Generate App**
 ```bash
 # Developer creates new app
-npx @kaushalrathour/expo-starter AwesomeApp
+npx @kaushalstc/expo-starter AwesomeApp
 cd AwesomeApp
 
 # This creates a complete app with:
@@ -78,7 +78,7 @@ cd AwesomeApp
 ### **Step 2: Add Shared Packages**
 ```bash
 # Add your shared packages
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 
 # Now they have access to:
 # - UI Components (Button, Card, Text)
@@ -94,9 +94,9 @@ npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
 import { View, Text, TouchableOpacity } from 'react-native';
 
 // After (with your shared packages)
-import { Card, Text, Button } from '@kaushalrathour/shared-ui';
+import { Card, Text, Button } from '@kaushalstc/shared-ui';
 import { useSelector } from 'react-redux';
-import { RootState } from '@kaushalrathour/shared-logic';
+import { RootState } from '@kaushalstc/shared-logic';
 ```
 
 ### **Step 4: Instant Professional App**
@@ -191,9 +191,9 @@ git push origin v1.1.0
 
 ### **Option A: Manual Installation (Current)**
 ```bash
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 cd MyApp
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### **Option B: CLI Integration (Enhanced)**
@@ -205,7 +205,7 @@ const addSharedPackages = await askQuestion('Add shared UI & logic packages? (Y/
 
 if (addSharedPackages.toLowerCase() === 'y') {
   console.log('📦 Installing shared packages...');
-  await execa('npm', ['install', '@kaushalrathour/shared-ui', '@kaushalrathour/shared-logic'], { 
+  await execa('npm', ['install', '@kaushalstc/shared-ui', '@kaushalstc/shared-logic'], { 
     cwd: projectPath 
   });
   
@@ -219,9 +219,9 @@ if (addSharedPackages.toLowerCase() === 'y') {
 Create different templates:
 
 ```bash
-npx @kaushalrathour/expo-starter MyApp --template=basic
-npx @kaushalrathour/expo-starter MyApp --template=shared
-npx @kaushalrathour/expo-starter MyApp --template=full
+npx @kaushalstc/expo-starter MyApp --template=basic
+npx @kaushalstc/expo-starter MyApp --template=shared
+npx @kaushalstc/expo-starter MyApp --template=full
 ```
 
 ## 📈 **Adoption Strategy**
@@ -244,8 +244,8 @@ node ../packages/expo-starter/bin/index.js CustomerApp
 node ../packages/expo-starter/bin/index.js AdminApp
 
 # Configure them with shared packages
-cd CustomerApp && npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
-cd AdminApp && npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+cd CustomerApp && npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
+cd AdminApp && npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### **3. Developer Experience**
@@ -257,8 +257,8 @@ Make it super easy:
 npx create-scalable-app MyApp
 
 # Which internally runs:
-# 1. npx @kaushalrathour/expo-starter MyApp
-# 2. cd MyApp && npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+# 1. npx @kaushalstc/expo-starter MyApp
+# 2. cd MyApp && npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 # 3. Configure theme provider
 # 4. Update imports to use shared components
 ```

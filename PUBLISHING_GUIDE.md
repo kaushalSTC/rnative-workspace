@@ -36,8 +36,8 @@ npm login
 ```
 
 #### **B. Verify Package Names**
-Your packages use scoped names: `@kaushalrathour/shared-ui`
-- ✅ This requires your npm account to have access to the `@kaushalrathour` scope
+Your packages use scoped names: `@kaushalstc/shared-ui`
+- ✅ This requires your npm account to have access to the `@kaushalstc` scope
 - ✅ Or the packages need `"publishConfig": { "access": "public" }` (already added)
 
 #### **C. Check Git Status**
@@ -67,21 +67,21 @@ npm pack --dry-run
 ```bash
 # Create test packages
 cd packages/shared-ui
-npm pack  # Creates @kaushalrathour-shared-ui-1.0.0.tgz
+npm pack  # Creates @kaushalstc-shared-ui-1.0.0.tgz
 
 cd ../shared-logic
-npm pack  # Creates @kaushalrathour-shared-logic-1.0.0.tgz
+npm pack  # Creates @kaushalstc-shared-logic-1.0.0.tgz
 
 # Test install in a sample project
 mkdir /tmp/test-install
 cd /tmp/test-install
 npm init -y
-npm install /path/to/rnative-workspace/packages/shared-ui/@kaushalrathour-shared-ui-1.0.0.tgz
-npm install /path/to/rnative-workspace/packages/shared-logic/@kaushalrathour-shared-logic-1.0.0.tgz
+npm install /path/to/rnative-workspace/packages/shared-ui/@kaushalstc-shared-ui-1.0.0.tgz
+npm install /path/to/rnative-workspace/packages/shared-logic/@kaushalstc-shared-logic-1.0.0.tgz
 
 # Test imports
-node -e "console.log(require('@kaushalrathour/shared-ui'))"
-node -e "console.log(require('@kaushalrathour/shared-logic'))"
+node -e "console.log(require('@kaushalstc/shared-ui'))"
+node -e "console.log(require('@kaushalstc/shared-logic'))"
 ```
 
 ---
@@ -100,11 +100,11 @@ cd ../shared-logic
 npm publish
 
 # You should see output like:
-# npm notice 📦  @kaushalrathour/shared-ui@1.0.0
+# npm notice 📦  @kaushalstc/shared-ui@1.0.0
 # npm notice === Tarball Contents ===
 # npm notice 1.2kB index.js
 # npm notice 15.4kB src/
-# + @kaushalrathour/shared-ui@1.0.0
+# + @kaushalstc/shared-ui@1.0.0
 ```
 
 #### **Method B: Batch Publishing (After first time)**
@@ -128,12 +128,12 @@ npm publish --workspaces
 #### **A. Check npm Registry**
 ```bash
 # Check if packages are published
-npm view @kaushalrathour/shared-ui
-npm view @kaushalrathour/shared-logic
+npm view @kaushalstc/shared-ui
+npm view @kaushalstc/shared-logic
 
 # Check latest version
-npm view @kaushalrathour/shared-ui version
-npm view @kaushalrathour/shared-logic version
+npm view @kaushalstc/shared-ui version
+npm view @kaushalstc/shared-logic version
 ```
 
 #### **B. Test Installation from Registry**
@@ -144,12 +144,12 @@ cd /tmp/test-npm-install
 npm init -y
 
 # Install from npm registry
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 
 # Test imports
 node -e "
-const ui = require('@kaushalrathour/shared-ui');
-const logic = require('@kaushalrathour/shared-logic');
+const ui = require('@kaushalstc/shared-ui');
+const logic = require('@kaushalstc/shared-logic');
 console.log('UI exports:', Object.keys(ui));
 console.log('Logic exports:', Object.keys(logic));
 "
@@ -171,7 +171,7 @@ echo "
 ## Installation
 
 \`\`\`bash
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 \`\`\`
 " >> README.md
 ```
@@ -247,13 +247,13 @@ After publishing, you can track your packages:
 
 ```bash
 # Download stats
-npm view @kaushalrathour/shared-ui --json | grep downloads
+npm view @kaushalstc/shared-ui --json | grep downloads
 
 # Package info
-npm info @kaushalrathour/shared-ui
+npm info @kaushalstc/shared-ui
 
 # List all versions
-npm view @kaushalrathour/shared-ui versions --json
+npm view @kaushalstc/shared-ui versions --json
 ```
 
 ---
@@ -267,7 +267,7 @@ npm view @kaushalrathour/shared-ui versions --json
 # Make sure you're logged in to the correct account
 npm whoami
 
-# And have access to the @kaushalrathour scope
+# And have access to the @kaushalstc scope
 # Or use public access (already configured)
 ```
 
@@ -299,11 +299,11 @@ Once published, developers can use your packages:
 
 ```bash
 # They can generate apps
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 
 # And add your shared packages
 cd MyApp
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 
 # Transform basic apps into professional ones! 🚀
 ```

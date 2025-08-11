@@ -1,4 +1,4 @@
-// Main exports for @kaushalrathour/shared-logic
+// Main exports for @kaushalstc/shared-logic
 
 // API
 export * from './src/api/client';

@@ -25,7 +25,7 @@ This tells pnpm to treat each package as part of the workspace.
 # pnpm automatically links packages within the workspace
 cd packages/shared-ui
 # Can import from shared-logic without publishing
-import { validateEmail } from '@kaushalrathour/shared-logic'; ✅
+import { validateEmail } from '@kaushalstc/shared-logic'; ✅
 ```
 
 ### **3. Efficient Development**
@@ -39,7 +39,7 @@ pnpm -r run test     # Test all packages
 pnpm -r version patch # Version all packages
 
 # Work on specific packages
-pnpm --filter @kaushalrathour/shared-ui run dev
+pnpm --filter @kaushalstc/shared-ui run dev
 ```
 
 ### **4. Dependency Management**
@@ -49,7 +49,7 @@ pnpm --filter shared-ui add react-native-paper
 
 # Add workspace dependency
 cd packages/shared-ui
-pnpm add @kaushalrathour/shared-logic  # Links locally!
+pnpm add @kaushalstc/shared-logic  # Links locally!
 ```
 
 ### **5. Publishing Workflow**
@@ -68,31 +68,31 @@ End users **don't need pnpm** - they use whatever package manager they prefer:
 ### **With npm (most common):**
 ```bash
 # Generate app
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 
 # Add shared packages  
 cd MyApp
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### **With yarn:**
 ```bash
 # Generate app
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 
 # Add shared packages
 cd MyApp  
-yarn add @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+yarn add @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### **With pnpm (if they prefer):**
 ```bash
 # Generate app
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 
 # Add shared packages
 cd MyApp
-pnpm add @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+pnpm add @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ---
@@ -116,8 +116,8 @@ MyAwesomeApp/
 ├── src/
 ├── package.json
 ├── node_modules/
-│   ├── @kaushalrathour/shared-ui/      ← Downloaded from npm
-│   └── @kaushalrathour/shared-logic/   ← Downloaded from npm
+│   ├── @kaushalstc/shared-ui/      ← Downloaded from npm
+│   └── @kaushalstc/shared-logic/   ← Downloaded from npm
 └── package-lock.json (or yarn.lock or pnpm-lock.yaml)
 ```
 
@@ -139,7 +139,7 @@ cd packages/expo-starter && npm install
 ### **2. Local Package Linking**
 ```typescript
 // In shared-ui, you can use shared-logic immediately:
-import { formatDate } from '@kaushalrathour/shared-logic';  // ✅ Works!
+import { formatDate } from '@kaushalstc/shared-logic';  // ✅ Works!
 
 // pnpm automatically links the local packages
 // No need to publish to test integration
@@ -202,14 +202,14 @@ pnpm -r publish
 ### **Distribution (Users use any package manager):**
 ```bash
 # User generates app
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 
 # User adds packages (they choose their preferred manager)
-npm install @kaushalrathour/shared-ui    # Downloaded from npm registry
+npm install @kaushalstc/shared-ui    # Downloaded from npm registry
 # OR
-yarn add @kaushalrathour/shared-ui       # Downloaded from npm registry  
+yarn add @kaushalstc/shared-ui       # Downloaded from npm registry  
 # OR
-pnpm add @kaushalrathour/shared-ui       # Downloaded from npm registry
+pnpm add @kaushalstc/shared-ui       # Downloaded from npm registry
 ```
 
 ---

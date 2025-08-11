@@ -2,13 +2,13 @@
 
 <div align="center">
 
-[![npm version](https://badge.fury.io/js/%40kaushalrathour%2Fexpo-starter.svg)](https://badge.fury.io/js/%40kaushalrathour%2Fexpo-starter)
-[![Downloads](https://img.shields.io/npm/dm/@kaushalrathour/expo-starter.svg)](https://www.npmjs.com/package/@kaushalrathour/expo-starter)
+[![npm version](https://badge.fury.io/js/%40kaushalSTC%2Fexpo-starter.svg)](https://badge.fury.io/js/%40kaushalSTC%2Fexpo-starter)
+[![Downloads](https://img.shields.io/npm/dm/@kaushalstc/expo-starter.svg)](https://www.npmjs.com/package/@kaushalstc/expo-starter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![Expo](https://img.shields.io/badge/Expo-SDK%2051+-000020.svg)](https://expo.dev/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/kaushalrathour/expo-starter/graphs/commit-activity)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/kaushalrathour/expo-starter/pulls)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/kaushalSTC/expo-starter/graphs/commit-activity)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/kaushalSTC/expo-starter/pulls)
 
 **🎯 The Most Complete Expo Template for Professional Development**
 
@@ -37,13 +37,13 @@
 ### Method 1: Basic App Creation
 ```bash
 # Create app with default package name
-npx @kaushalrathour/expo-starter MyAwesomeApp
+npx @kaushalstc/expo-starter MyAwesomeApp
 ```
 
 ### Method 2: Custom Package Name (Recommended)
 ```bash
 # Create app with custom package identifier
-npx @kaushalrathour/expo-starter MyAwesomeApp com.company.myawesomeapp
+npx @kaushalstc/expo-starter MyAwesomeApp com.company.myawesomeapp
 ```
 
 **Then run your app:**
@@ -88,7 +88,7 @@ npm run web      # Web browser
 
 1. **Create your app**:
 ```bash
-npx @kaushalrathour/expo-starter MyApp
+npx @kaushalstc/expo-starter MyApp
 ```
 
 2. **Install dependencies**:
@@ -133,13 +133,13 @@ Join **1,800+ developers** who've shipped apps faster with this template:
 
 ```bash
 # Always get the latest version
-npx @kaushalrathour/react-native-starter@latest MyApp
+npx @kaushalstc/react-native-starter@latest MyApp
 ```
 
 **We're here to support you:**
-- 📚 [Full Documentation](https://github.com/kaushalrathour/react-native-starter/wiki)
-- 🐛 [Issue Tracking](https://github.com/kaushalrathour/react-native-starter/issues)
-- 💬 [Community Discussions](https://github.com/kaushalrathour/react-native-starter/discussions)
+- 📚 [Full Documentation](https://github.com/kaushalSTC/react-native-starter/wiki)
+- 🐛 [Issue Tracking](https://github.com/kaushalSTC/react-native-starter/issues)
+- 💬 [Community Discussions](https://github.com/kaushalSTC/react-native-starter/discussions)
 
 ## 🌟 Why This Stands Out
 
@@ -376,7 +376,7 @@ cd ios && xcodebuild clean && cd ..
 
 <div align="center">
 
-**Created with ❤️ by [Kaushal Rathour](https://github.com/kaushalrathour)** 
+**Created with ❤️ by [Kaushal Rathour](https://github.com/kaushalSTC)** 
 
 **⭐ If this saved you time, star the repo! ⭐**  
 **Your stars fuel our updates!**

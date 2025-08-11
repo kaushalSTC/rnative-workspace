@@ -1,6 +1,6 @@
 {
-  "name": "@kaushalrathour/shared-ui",
-  "version": "1.0.0",
+  "name": "@kaushalstc/shared-ui",
+  "version": "1.0.1",
   "description": "Shared UI components and theming for React Native apps",
   "main": "index.js",
   "files": [
@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaushalrathour/rnative-workspace.git",
+    "url": "git+https://github.com/kaushalSTC/rnative-workspace.git",
     "directory": "packages/shared-ui"
   },
-  "homepage": "https://github.com/kaushalrathour/rnative-workspace#readme",
+  "homepage": "https://github.com/kaushalSTC/rnative-workspace#readme",
   "bugs": {
-    "url": "https://github.com/kaushalrathour/rnative-workspace/issues"
+    "url": "https://github.com/kaushalSTC/rnative-workspace/issues"
   },
   "keywords": [
     "react-native",
@@ -35,7 +35,7 @@
   ],
   "author": {
     "name": "Kaushal Rathour",
-    "url": "https://github.com/kaushalrathour"
+    "url": "https://github.com/kaushalSTC"
   },
   "license": "MIT",
   "engines": {

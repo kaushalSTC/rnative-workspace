@@ -21,7 +21,7 @@ rnative-workspace/
 
 ## Package Architecture
 
-### 1. @kaushalrathour/shared-ui
+### 1. @kaushalstc/shared-ui
 
 **Purpose**: Provides reusable UI components, theming, and design system.
 
@@ -33,7 +33,7 @@ rnative-workspace/
 
 **Usage Example**:
 ```tsx
-import { Button, Card, Text, ThemeProvider } from '@kaushalrathour/shared-ui';
+import { Button, Card, Text, ThemeProvider } from '@kaushalstc/shared-ui';
 
 export default function App() {
   return (
@@ -71,7 +71,7 @@ shared-ui/
 └── index.js                 # Main export
 ```
 
-### 2. @kaushalrathour/shared-logic
+### 2. @kaushalstc/shared-logic
 
 **Purpose**: Provides business logic, API integrations, Redux state management, and utility functions.
 
@@ -90,7 +90,7 @@ import {
   UserService, 
   formatDate, 
   validateEmail 
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 // Setup store
 const store = createStore();
@@ -139,10 +139,10 @@ mkdir apps/customer-app
 cd apps/customer-app
 
 # Generate using expo-starter CLI
-npx @kaushalrathour/expo-starter CustomerApp
+npx @kaushalstc/expo-starter CustomerApp
 
 # Add shared packages as dependencies
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### 2. App-Specific Customization
@@ -150,7 +150,7 @@ npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
 **Theme Customization**:
 ```tsx
 // apps/customer-app/src/theme.ts
-import { createTheme } from '@kaushalrathour/shared-ui';
+import { createTheme } from '@kaushalstc/shared-ui';
 
 export const customerTheme = createTheme(false, {
   colors: {
@@ -168,7 +168,7 @@ export const customerTheme = createTheme(false, {
 **Custom API Configuration**:
 ```tsx
 // apps/customer-app/src/api.ts
-import { createApiClient, UserService } from '@kaushalrathour/shared-logic';
+import { createApiClient, UserService } from '@kaushalstc/shared-logic';
 
 const apiClient = createApiClient({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -195,7 +195,7 @@ Create the component:
 import React from 'react';
 import { Image, View } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
-import { getInitials } from '@kaushalrathour/shared-logic';
+import { getInitials } from '@kaushalstc/shared-logic';
 
 export const Avatar = ({ user, size = 40 }) => {
   const theme = useTheme();
@@ -217,9 +217,9 @@ The shared packages work seamlessly with React Navigation (as used in expo-start
 // apps/customer-app/src/screens/Profile/Profile.tsx
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { Text, Button, Card } from '@kaushalrathour/shared-ui';
+import { Text, Button, Card } from '@kaushalstc/shared-ui';
 import { useSelector } from 'react-redux';
-import { RootState } from '@kaushalrathour/shared-logic';
+import { RootState } from '@kaushalstc/shared-logic';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation/RootStackParamList';
 
@@ -248,7 +248,7 @@ export const Profile: React.FC<Props> = ({ navigation }) => {
 // apps/customer-app/src/navigation/StackNavigator.tsx
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useTheme } from '@kaushalrathour/shared-ui';
+import { useTheme } from '@kaushalstc/shared-ui';
 import { Home } from '../screens/Home/Home';
 import { Profile } from '../screens/Profile/Profile';
 import { Settings } from '../screens/Settings/Settings';
@@ -371,7 +371,7 @@ Keep package READMEs updated with:
 1. **Clone this monorepo**
 2. **Install dependencies**: `pnpm install`
 3. **Create your first app**: `node packages/expo-starter/bin/index.js MyApp`
-4. **Add shared packages**: `npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic`
+4. **Add shared packages**: `npm install @kaushalstc/shared-ui @kaushalstc/shared-logic`
 5. **Start building**: Follow the examples above
 
 This architecture provides a solid foundation for scaling React Native applications while maintaining consistency and developer productivity.

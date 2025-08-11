@@ -9,7 +9,7 @@
     "lint": "pnpm -r run lint",
     "clean": "pnpm -r run clean",
     "dev": "pnpm -r run dev",
-    "expo-starter": "pnpm --filter @kaushalrathour/expo-starter run",
+    "expo-starter": "pnpm --filter @kaushalstc/expo-starter run",
     "prepare": "pnpm -r run prepare"
   },
   "keywords": [
@@ -21,7 +21,7 @@
   ],
   "author": {
     "name": "Kaushal Rathour",
-    "url": "https://github.com/kaushalrathour"
+    "url": "https://github.com/kaushalSTC"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",

@@ -580,10 +580,10 @@ async function run() {
 ✨ Includes: Navigation, Redux, UI components, build scripts, and more!
 ${configSection}
 
-📎 Template: @kaushalrathour/expo-starter
-🔗 Repository: https://github.com/kaushalrathour/expo-starter
+📎 Template: @kaushalstc/expo-starter
+🔗 Repository: https://github.com/kaushalSTC/expo-starter
 
-💡 Use 'npx @kaushalrathour/expo-starter' for latest version`;
+💡 Use 'npx @kaushalstc/expo-starter' for latest version`;
       
       await execa('git', ['commit', '-m', commitMessage], { cwd: appPath, stdio: 'pipe' });
       
@@ -761,7 +761,7 @@ ${configSection}
     console.log(chalk.gray('• Verify app.json scheme configuration'));
     console.log(chalk.gray('• Check Android intent filters and iOS associated domains'));
     
-    console.log(chalk.cyan('\n💬 Need Help? Visit: https://github.com/kaushalrathour/expo-starter/issues'));
+    console.log(chalk.cyan('\n💬 Need Help? Visit: https://github.com/kaushalSTC/expo-starter/issues'));
   } catch (err) {
     console.error(chalk.red('❌ An error occurred:'), err);
     process.exit(1);

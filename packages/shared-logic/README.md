@@ -1,4 +1,4 @@
-# @kaushalrathour/shared-logic
+# @kaushalstc/shared-logic
 
 Shared business logic, API clients, Redux slices, and utilities for React Native apps.
 
@@ -13,9 +13,9 @@ Shared business logic, API clients, Redux slices, and utilities for React Native
 ## 📦 Installation
 
 ```bash
-npm install @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-logic
 # or
-yarn add @kaushalrathour/shared-logic
+yarn add @kaushalstc/shared-logic
 ```
 
 ### Peer Dependencies
@@ -33,7 +33,7 @@ npm install react react-native
 ```tsx
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from '@kaushalrathour/shared-logic';
+import { createStore } from '@kaushalstc/shared-logic';
 import { YourApp } from './YourApp';
 
 const store = createStore();
@@ -57,7 +57,7 @@ import {
   getCurrentUser, 
   formatDate,
   validateEmail 
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 export const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ export const ProfileScreen = () => {
 ### 3. Setup API Client
 
 ```tsx
-import { createApiClient, UserService } from '@kaushalrathour/shared-logic';
+import { createApiClient, UserService } from '@kaushalstc/shared-logic';
 
 // Configure API client
 const apiClient = createApiClient({
@@ -115,7 +115,7 @@ const user = await userService.getCurrentUser();
 #### User Slice
 ```tsx
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, loginUser, logout, setUser } from '@kaushalrathour/shared-logic';
+import { RootState, loginUser, logout, setUser } from '@kaushalstc/shared-logic';
 
 const { currentUser, isAuthenticated, isLoading, error } = useSelector(
   (state: RootState) => state.user
@@ -130,7 +130,7 @@ dispatch(setUser(userData));
 #### App Slice
 ```tsx
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, setTheme, setLoading } from '@kaushalrathour/shared-logic';
+import { RootState, setTheme, setLoading } from '@kaushalstc/shared-logic';
 
 const { theme, isLoading, language } = useSelector(
   (state: RootState) => state.app
@@ -146,7 +146,7 @@ dispatch(setLoading(true));
 ### Basic Usage
 
 ```tsx
-import { createApiClient } from '@kaushalrathour/shared-logic';
+import { createApiClient } from '@kaushalstc/shared-logic';
 
 const apiClient = createApiClient({
   baseURL: 'https://api.example.com',
@@ -169,7 +169,7 @@ await apiClient.delete('/users/1');
 ### With Services
 
 ```tsx
-import { UserService, createApiClient } from '@kaushalrathour/shared-logic';
+import { UserService, createApiClient } from '@kaushalstc/shared-logic';
 
 const apiClient = createApiClient({ baseURL: 'https://api.example.com' });
 const userService = new UserService(apiClient);
@@ -193,7 +193,7 @@ import {
   formatNumber,
   capitalize,
   getInitials
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 // Date formatting
 formatDate(new Date()); // "January 15, 2024"
@@ -217,7 +217,7 @@ import {
   validatePhoneNumber,
   validateRequired,
   validateUrl
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 // Email validation
 const isValidEmail = validateEmail('user@example.com'); // true
@@ -245,7 +245,7 @@ import type {
   AuthResponse,
   RootState,
   AppDispatch
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 // Use in your components
 interface Props {
@@ -265,7 +265,7 @@ const dispatch: AppDispatch = useDispatch();
 ### Custom Store Configuration
 
 ```tsx
-import { createStore, RootState } from '@kaushalrathour/shared-logic';
+import { createStore, RootState } from '@kaushalstc/shared-logic';
 
 // With preloaded state
 const preloadedState: Partial<RootState> = {
@@ -293,12 +293,12 @@ To customize authentication token handling, extend the `ApiClient` class or modi
 
 ## 🔄 Integration with Shared UI
 
-Perfect companion to `@kaushalrathour/shared-ui`:
+Perfect companion to `@kaushalstc/shared-ui`:
 
 ```tsx
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '@kaushalrathour/shared-ui';
-import { createStore } from '@kaushalrathour/shared-logic';
+import { ThemeProvider } from '@kaushalstc/shared-ui';
+import { createStore } from '@kaushalstc/shared-logic';
 
 const store = createStore();
 
@@ -315,7 +315,7 @@ export default function App() {
 
 ## 🤝 Contributing
 
-Issues and PRs welcome! See the [main repository](https://github.com/kaushalrathour/rnative-workspace).
+Issues and PRs welcome! See the [main repository](https://github.com/kaushalSTC/rnative-workspace).
 
 ## 📄 License
 

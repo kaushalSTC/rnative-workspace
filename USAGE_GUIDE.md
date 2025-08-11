@@ -6,10 +6,10 @@
 
 ```bash
 # Install the CLI globally
-npm install -g @kaushalrathour/expo-starter
+npm install -g @kaushalstc/expo-starter
 
 # Or use with npx (recommended)
-npx @kaushalrathour/expo-starter MyAwesomeApp
+npx @kaushalstc/expo-starter MyAwesomeApp
 ```
 
 This generates a complete React Native app with:
@@ -25,10 +25,10 @@ This generates a complete React Native app with:
 cd MyAwesomeApp
 
 # Add the shared UI and logic packages
-npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+npm install @kaushalstc/shared-ui @kaushalstc/shared-logic
 
 # Or with yarn
-yarn add @kaushalrathour/shared-ui @kaushalrathour/shared-logic
+yarn add @kaushalstc/shared-ui @kaushalstc/shared-logic
 ```
 
 ### Step 3: Integrate Shared Components
@@ -62,8 +62,8 @@ export const Home = ({ navigation }) => {
 // src/screens/Home/Home.tsx
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Text, Button, Card } from '@kaushalrathour/shared-ui';
-import { useTheme } from '@kaushalrathour/shared-ui';
+import { Text, Button, Card } from '@kaushalstc/shared-ui';
+import { useTheme } from '@kaushalstc/shared-ui';
 
 export const Home = ({ navigation }) => {
   return (
@@ -95,8 +95,8 @@ Wrap your app with the theme provider:
 // App.tsx
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '@kaushalrathour/shared-ui';
-import { createStore } from '@kaushalrathour/shared-logic';
+import { ThemeProvider } from '@kaushalstc/shared-ui';
+import { createStore } from '@kaushalstc/shared-logic';
 import { NavigationContainer } from './src/navigation/NavigationContainer';
 
 const store = createStore();
@@ -120,13 +120,13 @@ Replace your Redux setup with shared logic:
 // src/screens/Profile/Profile.tsx
 import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { Text, Button, Card } from '@kaushalrathour/shared-ui';
+import { Text, Button, Card } from '@kaushalstc/shared-ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   RootState, 
   getCurrentUser, 
   formatDate 
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 export const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -174,7 +174,7 @@ export const Profile = ({ navigation }) => {
 ### Custom Theme
 ```tsx
 // src/theme/customTheme.ts
-import { createTheme } from '@kaushalrathour/shared-ui';
+import { createTheme } from '@kaushalstc/shared-ui';
 
 export const myAppTheme = createTheme(false, {
   colors: {
@@ -193,7 +193,7 @@ export const myAppTheme = createTheme(false, {
 ### Custom API Configuration
 ```tsx
 // src/api/config.ts
-import { createApiClient, UserService } from '@kaushalrathour/shared-logic';
+import { createApiClient, UserService } from '@kaushalstc/shared-logic';
 
 const apiClient = createApiClient({
   baseURL: process.env.EXPO_PUBLIC_API_URL || 'https://api.myapp.com',
@@ -210,7 +210,7 @@ export const userService = new UserService(apiClient);
 
 ### From Basic Expo Starter to Shared Packages
 
-1. **Install packages**: `npm install @kaushalrathour/shared-ui @kaushalrathour/shared-logic`
+1. **Install packages**: `npm install @kaushalstc/shared-ui @kaushalstc/shared-logic`
 
 2. **Replace components gradually**:
    - `<Text>` → `<Text variant="body">`
@@ -223,7 +223,7 @@ export const userService = new UserService(apiClient);
    import { store } from './src/redux/store';
    
    // After
-   import { createStore } from '@kaushalrathour/shared-logic';
+   import { createStore } from '@kaushalstc/shared-logic';
    const store = createStore();
    ```
 
@@ -231,7 +231,7 @@ export const userService = new UserService(apiClient);
 
 5. **Update navigation styling**:
    ```tsx
-   import { useTheme } from '@kaushalrathour/shared-ui';
+   import { useTheme } from '@kaushalstc/shared-ui';
    
    const theme = useTheme();
    // Use theme.colors in navigation options
@@ -241,9 +241,9 @@ export const userService = new UserService(apiClient);
 
 | Package | Version | React Native | Expo SDK |
 |---------|---------|-------------|----------|
-| @kaushalrathour/shared-ui | ^1.0.0 | >=0.70 | >=47 |
-| @kaushalrathour/shared-logic | ^1.0.0 | >=0.70 | >=47 |
-| @kaushalrathour/expo-starter | ^3.0.0 | Latest | Latest |
+| @kaushalstc/shared-ui | ^1.0.0 | >=0.70 | >=47 |
+| @kaushalstc/shared-logic | ^1.0.0 | >=0.70 | >=47 |
+| @kaushalstc/expo-starter | ^3.0.0 | Latest | Latest |
 
 ## 🔧 **Development Workflow**
 
@@ -253,7 +253,7 @@ If you're developing or contributing to the packages:
 
 ```bash
 # Clone the monorepo
-git clone https://github.com/kaushalrathour/rnative-workspace.git
+git clone https://github.com/kaushalSTC/rnative-workspace.git
 cd rnative-workspace
 
 # Install dependencies
@@ -264,8 +264,8 @@ cd packages/shared-ui && pnpm link --global
 cd packages/shared-logic && pnpm link --global
 
 # In your test app
-pnpm link --global @kaushalrathour/shared-ui
-pnpm link --global @kaushalrathour/shared-logic
+pnpm link --global @kaushalstc/shared-ui
+pnpm link --global @kaushalstc/shared-logic
 ```
 
 ### Building from Source
@@ -309,7 +309,7 @@ npm install -D typescript@~4.9.0
 **Redux store conflicts:**
 ```tsx
 // Don't mix the generated store with shared-logic store
-// Use only: createStore() from @kaushalrathour/shared-logic
+// Use only: createStore() from @kaushalstc/shared-logic
 ```
 
 ## 📚 **Examples**
@@ -323,7 +323,7 @@ import {
   Button, 
   Card, 
   useTheme 
-} from '@kaushalrathour/shared-ui';
+} from '@kaushalstc/shared-ui';
 import { 
   useSelector, 
   useDispatch 
@@ -333,7 +333,7 @@ import {
   logout, 
   validateEmail,
   formatDate 
-} from '@kaushalrathour/shared-logic';
+} from '@kaushalstc/shared-logic';
 
 export const Settings = ({ navigation }) => {
   const theme = useTheme();
@@ -400,6 +400,6 @@ After setting up shared packages:
 
 ## 📞 **Support**
 
-- **Issues**: [GitHub Issues](https://github.com/kaushalrathour/rnative-workspace/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/kaushalrathour/rnative-workspace/discussions)
+- **Issues**: [GitHub Issues](https://github.com/kaushalSTC/rnative-workspace/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/kaushalSTC/rnative-workspace/discussions)
 - **Documentation**: [Architecture Guide](./ARCHITECTURE.md)
