@@ -49,19 +49,39 @@ jobs:
             echo "Force publish enabled - including all packages"
             packages=$(find packages -name "package.json" -not -path "*/node_modules/*" | xargs dirname | sed 's/packages\///' | jq -R -s -c 'split("\n")[:-1]')
           else
-            # Get changed files since last commit
-            if git rev-parse HEAD~1 >/dev/null 2>&1; then
-              changed_files=$(git diff --name-only HEAD~1 HEAD)
-            else
-              # If this is the first commit, get all files
-              changed_files=$(git ls-files)
-            fi
+            # Look at recent commits to find package changes (last 10 commits should be enough)
+            echo "Looking for package changes in recent commits..."
+            changed_files=$(git diff --name-only HEAD~10 HEAD 2>/dev/null || git ls-files)
             
-            echo "Changed files:"
+            echo "Changed files in recent commits:"
             echo "$changed_files"
             
             # Extract unique package directories from changed files
             packages=$(echo "$changed_files" | grep -E '^packages/[^/]+/' | sed 's|packages/\([^/]*\)/.*|\1|' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+            
+            # If no packages found in recent commits, check if any packages have versions that don't exist on npm
+            if [ "$packages" = "[]" ] || [ "$packages" = '[""]' ]; then
+              echo "No package changes found in recent commits, checking for unpublished versions..."
+              all_packages=$(find packages -name "package.json" -not -path "*/node_modules/*" | xargs dirname | sed 's/packages\///')
+              unpublished_packages="[]"
+              
+              for pkg in $all_packages; do
+                if [ -f "packages/$pkg/package.json" ]; then
+                  pkg_name=$(node -p "require('./packages/$pkg/package.json').name" 2>/dev/null || echo "")
+                  pkg_version=$(node -p "require('./packages/$pkg/package.json').version" 2>/dev/null || echo "")
+                  
+                  if [ ! -z "$pkg_name" ] && [ ! -z "$pkg_version" ]; then
+                    echo "Checking if $pkg_name@$pkg_version exists on npm..."
+                    if ! npm view "$pkg_name@$pkg_version" version >/dev/null 2>&1; then
+                      echo "Found unpublished version: $pkg_name@$pkg_version"
+                      unpublished_packages=$(echo "$unpublished_packages" | jq -c ". + [\"$pkg\"]")
+                    fi
+                  fi
+                fi
+              done
+              
+              packages="$unpublished_packages"
+            fi
           fi
           
           echo "Detected packages: $packages"
