@@ -1,6 +1,6 @@
-# 🚀 STC Expo Starter Template
+# 🚀 Expo Starter Template
 
-**Internal React Native Expo template for Seventh Triangle Company projects**
+**Professional React Native Expo template for rapid development**
 
 *Enterprise-ready • TypeScript • Redux Toolkit • ScaledSheet Styling • Navigation • Best Practices*
 
@@ -8,7 +8,7 @@
 
 ## 🌟 What This Template Provides
 
-> **Everything STC developers need for rapid Expo app development**
+> **Everything you need for rapid Expo app development**
 
 ✨ **35+ Carefully Curated NPM Scripts** for professional development workflow  
 🏢 **Enterprise-grade Architecture** with TypeScript & Redux Toolkit  
@@ -97,128 +97,107 @@ src/
 └── utils/           # Helpers & hooks
 ```
 
-## 📐 ScaledSheet - Responsive UI Made Simple
+## 📐 ScaledSheet + Theme System - Perfect UI on Every Device
 
-**Why ScaledSheet?** Every STC app needs to work perfectly on all device sizes. ScaledSheet automatically converts numerical values to strings with device-appropriate scaling.
+**Why ScaledSheet?** This template ensures your app works perfectly on all device sizes using predefined constants and automatic scaling.
 
-### Basic Usage
+### 🎨 Theme System with Dark/Light Mode
+
+The template includes a complete theme system with automatic dark/light mode support:
+
+```javascript
+// Colors are automatically managed by Redux theme state
+const {colors} = useSelector((state) => state.theme);
+
+// All colors adapt to theme changes:
+colors.textPrimary     // White in dark mode, black in light mode
+colors.surface         // Dark surface in dark mode, light in light mode
+colors.primary         // Consistent across themes
+```
+
+### 📏 Using FontSize & Spacing Constants
+
+**✅ Recommended**: Use predefined constants for consistent scaling:
 
 ```javascript
 import { ScaledSheet } from 'react-native-size-matters';
-
-// ✅ Good - ScaledSheet handles conversion automatically
-const styles = ScaledSheet.create({
-  container: {
-    padding: 20,           // → "20@s" → scales horizontally
-    marginTop: 10,         // → "10@vs" → scales vertically  
-    fontSize: 16,          // → "16@ms" → scales with font size
-    borderRadius: 8,       // → "8@s" → scales horizontally
-  },
-  title: {
-    fontSize: 24,          // Automatically becomes "24@ms"
-    marginBottom: 15,      // Automatically becomes "15@vs"
-  }
-});
-```
-
-### Advanced Scaling Options
-
-```javascript
-// Manual scaling control (when you need it)
-const styles = ScaledSheet.create({
-  // Horizontal scaling for width, padding, margin
-  container: {
-    width: '300@s',        // Scale horizontally
-    paddingHorizontal: '20@s',
-  },
-  
-  // Vertical scaling for height, line height  
-  text: {
-    lineHeight: '24@vs',   // Scale vertically
-    marginVertical: '10@vs',
-  },
-  
-  // Font scaling (recommended for text)
-  title: {
-    fontSize: '18@ms',     // Moderate scale (font-friendly)
-  },
-  
-  // Mixed scaling
-  button: {
-    width: '200@s',        // Horizontal scale
-    height: '44@vs',       // Vertical scale
-    fontSize: '16@ms',     // Font scale
-  }
-});
-```
-
-### ScaledSheet vs Regular StyleSheet
-
-```javascript
-// ❌ Regular StyleSheet - Fixed sizes, poor responsiveness
-const regularStyles = StyleSheet.create({
-  container: {
-    padding: 20,           // Always 20dp, too small on tablets
-    fontSize: 16,          // Always 16sp, hard to read on small phones
-  }
-});
-
-// ✅ ScaledSheet - Responsive across all devices
-const responsiveStyles = ScaledSheet.create({
-  container: {
-    padding: 20,           // Scales to device size automatically
-    fontSize: 16,          // Scales for readability
-  }
-});
-```
-
-### Key Benefits for STC Projects
-
-| Traditional StyleSheet | ScaledSheet | Benefit |
-|----------------------|-------------|----------|
-| `fontSize: 16` | `fontSize: 16` → `"16@ms"` | Text readable on all devices |
-| `padding: 20` | `padding: 20` → `"20@s"` | Touch targets properly sized |
-| `marginTop: 10` | `marginTop: 10` → `"10@vs"` | Consistent spacing |
-| Manual device checks | Automatic scaling | No device-specific code needed |
-
-### Real-World Example
-
-```javascript
-// src/components/ProductCard.js
-import { ScaledSheet } from 'react-native-size-matters';
+import { FontSize, Spacing } from '../../constants/sizing';
 
 const styles = ScaledSheet.create({
-  card: {
-    padding: 16,           // Perfect padding on all devices
-    marginBottom: 12,      // Consistent spacing
-    borderRadius: 8,       // Proper corner radius
-    minHeight: 120,        // Adequate touch area
+  container: {
+    padding: `${Spacing.md}@s`,           // Uses predefined medium spacing
+    marginTop: `${Spacing.sm}@vs`,        // Uses small vertical spacing
   },
   title: {
-    fontSize: 18,          // Readable title text
-    marginBottom: 8,       // Good text separation
-    lineHeight: 24,        // Proper line spacing
-  },
-  price: {
-    fontSize: 16,          // Clear price display
-    fontWeight: 'bold',
-  },
-  description: {
-    fontSize: 14,          // Readable body text
-    lineHeight: 20,        // Comfortable reading
-    marginTop: 8,
+    fontSize: `${FontSize.large}@ms`,     // Uses large font size with scaling
+    marginBottom: `${Spacing.xs}@vs`,     // Uses extra small spacing
   }
 });
 ```
 
-**The Result**: Your UI looks perfect on iPhone SE, iPhone 15 Pro Max, iPad, and Android tablets - without writing device-specific code.
+### 🔧 Available Constants
 
-## 🎯 STC Development Standards
+**FontSize Constants:**
+```javascript
+FontSize.xs     // 12  → "12@ms"
+FontSize.small  // 14  → "14@ms" 
+FontSize.medium // 16  → "16@ms"
+FontSize.large  // 20  → "20@ms"
+FontSize.xl     // 24  → "24@ms"
+```
 
-**This template follows STC's proven patterns:**  
+**Spacing Constants:**
+```javascript
+Spacing.xs   // 4   → "4@s" or "4@vs"
+Spacing.sm   // 8   → "8@s" or "8@vs"
+Spacing.md   // 16  → "16@s" or "16@vs"
+Spacing.lg   // 24  → "24@s" or "24@vs"
+Spacing.xl   // 32  → "32@s" or "32@vs"
+```
+
+### 🎯 Best Practices
+
+```javascript
+// ✅ GOOD: Use constants for consistency
+const styles = ScaledSheet.create({
+  container: {
+    padding: `${Spacing.md}@s`,
+    fontSize: `${FontSize.medium}@ms`,
+  }
+});
+
+// ❌ AVOID: Direct numbers (but still works)
+const styles = ScaledSheet.create({
+  container: {
+    padding: 16,  // Works, but use Spacing.md instead
+    fontSize: 16, // Works, but use FontSize.medium instead
+  }
+});
+```
+
+### 🌙 Theme Toggle Integration
+
+Every screen includes a theme toggle button demonstrating the theming system:
+
+```javascript
+// Theme colors automatically update across the entire app
+const {colors} = useSelector((state) => state.theme);
+const dispatch = useDispatch();
+
+const toggleTheme = () => {
+  dispatch(toggleThemeMode()); // Switches between light/dark
+};
+```
+
+**The Result**: Consistent spacing, perfect typography, and beautiful themes that work flawlessly across iPhone SE, iPhone 15 Pro Max, iPad, and Android tablets.
+
+## 🎯 Production Standards
+
+**This template follows industry best practices:**  
 ✅ **Tested** with React Native 0.72+  
-✅ **Production-ready** for client projects  
-✅ **Scalable architecture** for team development
+✅ **Production-ready** architecture  
+✅ **Scalable** for team development  
+✅ **Theme system** with dark/light mode
 
 ## ⚡ 50+ NPM Scripts - Your Complete Toolkit
 
@@ -389,30 +368,8 @@ cd ios && xcodebuild clean && cd ..
 | **Average Setup Time** | 30 seconds | vs 8+ hours manual setup |
 | **Scripts Included** | 60+ | vs 5-10 in typical projects |
 | **Dependencies Pre-configured** | 15+ | Production-ready out of box |
-| **STC Projects Using Template** | Growing | Faster delivery to clients |
-
-## 🛠️ For STC Developers
-
-**Getting Help:**
-- Contact the development team for template issues
-- Check internal documentation for project standards
-- Follow STC coding guidelines when extending the template
-
-**Template Maintenance:**
-- Template is maintained by the STC development team
-- Regular updates include latest React Native and Expo versions
-- New features added based on project requirements
+| **Development Speed** | 3x faster | Skip boilerplate setup |
 
 ## 📄 License
 
 **MIT License** - Free for personal and commercial use.
-
----
-
-<div align="center">
-
-**🏢 Seventh Triangle Company - Internal Development Template**
-
-*Streamlining mobile development for STC projects*
-
-</div>

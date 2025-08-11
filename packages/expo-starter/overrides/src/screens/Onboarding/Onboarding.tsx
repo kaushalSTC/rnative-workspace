@@ -4,14 +4,17 @@ import { ThemeState } from "../../redux/slices/themeSlice";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { getStyling } from "./styles";
+import ThemeToggle from "../../components/ThemeToggle";
 
 const Onboarding = ({ navigation }: OnboardingScreenProps) => {
     const {colors}: ThemeState = useSelector((state: any)=> state.theme);
     const styles = useMemo(()=>{
         return getStyling(colors)
-    },[])
+    },[colors])
     return(
-        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+        <>
+            <ThemeToggle position="top-left" />
+            <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
             <Text style={styles.heading}>👋 Onboarding Screen</Text>
             <Text style={styles.subtitle}>Here's how to get started with development</Text>
 
@@ -36,7 +39,17 @@ const Onboarding = ({ navigation }: OnboardingScreenProps) => {
                 <Text style={styles.stepText}>2. Create reusable components in src/components/</Text>
                 <Text style={styles.stepText}>3. Set up API services in src/services/</Text>
                 <Text style={styles.stepText}>4. Configure app state in src/redux/</Text>
-                <Text style={styles.stepText}>5. Customize theme colors in src/theme/</Text>
+                <Text style={styles.stepText}>5. Customize theme colors in src/constants/colors.ts</Text>
+            </View>
+
+            <View style={styles.card}>
+                <Text style={styles.cardTitle}>🎨 Theme System Implementation</Text>
+                <Text style={styles.cardText}>Try the theme toggle in the top-left! The system works by:</Text>
+                <Text style={styles.stepText}>1. Redux manages theme state (isDarkMode + colors)</Text>
+                <Text style={styles.stepText}>2. Components subscribe to theme changes via useSelector</Text>
+                <Text style={styles.stepText}>3. Styles are memoized with colors as dependency</Text>
+                <Text style={styles.stepText}>4. Theme toggle dispatches actions to update state</Text>
+                <Text style={styles.stepText}>5. All subscribed components re-render automatically</Text>
             </View>
 
             <View style={styles.card}>
@@ -73,6 +86,7 @@ const Onboarding = ({ navigation }: OnboardingScreenProps) => {
                 <Text style={styles.footerSubText}>Replace these screens with your app content</Text>
             </View>
         </ScrollView>
+        </>
     )
 }
 

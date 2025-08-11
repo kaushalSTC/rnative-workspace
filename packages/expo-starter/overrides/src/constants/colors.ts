@@ -12,6 +12,10 @@ export const darkThemeColors = {
 
   border: '#2C2C2C',
   error: '#CF6679',
+  
+  // Additional colors for better theming support
+  onPrimary: '#000000',
+  outline: '#333333',
 };
 
 export const lightThemeColors = {
@@ -28,6 +32,10 @@ export const lightThemeColors = {
 
   border: '#E0E0E0',
   error: '#B00020',
+  
+  // Additional colors for better theming support
+  onPrimary: '#FFFFFF',
+  outline: '#CCCCCC',
 };
 
 export const commonColors = {

@@ -12,6 +12,10 @@ export type ThemeColors = {
 
   border: string;
   error: string;
+  
+  // Additional colors for better theming support
+  onPrimary: string;
+  outline: string;
 };
 
 export type CommonColors = {
