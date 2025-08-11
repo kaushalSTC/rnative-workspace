@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'packages/*/package.json'
       - 'packages/**'
+      - '.github/workflows/publish-packages.yml'
   workflow_dispatch:
     inputs:
       force_publish:
