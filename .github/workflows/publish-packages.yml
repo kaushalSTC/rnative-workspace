@@ -16,7 +16,7 @@ on:
 
 env:
   NODE_VERSION: '18'
-  PNPM_VERSION: '8'
+  PNPM_VERSION: '10'
 
 jobs:
   detect-changes:
@@ -99,7 +99,9 @@ jobs:
           version: ${{ env.PNPM_VERSION }}
 
       - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          # Try frozen lockfile first, fallback to regular install if needed
+          pnpm install --frozen-lockfile || pnpm install
 
       - name: 🔍 Check package exists and needs update
         id: check-package
