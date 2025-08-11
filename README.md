@@ -70,6 +70,30 @@ This workspace uses pnpm with workspaces. Key commands:
 - `pnpm --filter <package> <command>` - Run command in specific package
 - `pnpm -w add <dep>` - Add dependency to workspace root
 
+## 🚀 Automated Publishing
+
+Packages are automatically published to npm when pushed to the main branch:
+
+- 📦 **Smart Detection** - Only publishes packages that have been updated
+- 🛡️ **Version Conflict Prevention** - Skips packages with existing versions
+- ⚡ **Parallel Publishing** - Multiple packages publish simultaneously
+- 📋 **Detailed Reporting** - Clear logs show exactly what happened
+
+### Quick Commands
+```bash
+# List all packages and versions
+npm run version:list
+
+# Bump a package version
+node scripts/version-bump.js expo-starter patch
+node scripts/version-bump.js shared-ui minor
+
+# Commit and push (triggers auto-publish)
+git add . && git commit -m "feat: updates" && git push
+```
+
+📚 **[Full Documentation →](./AUTOMATED_PUBLISHING.md)**
+
 ## License
 
 MIT

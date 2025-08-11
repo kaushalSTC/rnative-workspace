@@ -10,7 +10,14 @@
     "clean": "pnpm -r run clean",
     "dev": "pnpm -r run dev",
     "expo-starter": "pnpm --filter @kaushalstc/expo-starter run",
-    "prepare": "pnpm -r run prepare"
+    "prepare": "pnpm -r run prepare",
+    "version:list": "node scripts/version-bump.js --list",
+    "version:help": "node scripts/version-bump.js --help",
+    "version:patch": "node scripts/version-bump.js",
+    "version:minor": "node scripts/version-bump.js",
+    "version:major": "node scripts/version-bump.js",
+    "publish:check": "pnpm -r --dry-run publish",
+    "publish:local": "pnpm -r publish --no-git-checks"
   },
   "keywords": [
     "react-native",

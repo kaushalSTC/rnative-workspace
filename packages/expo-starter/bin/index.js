@@ -80,7 +80,7 @@ async function run() {
 
     // Step 2: Remove files/folders to override
     console.log(chalk.cyan('🧹 Cleaning up default Expo files...'));
-    const toRemove = ['App.tsx', 'README.md', 'babel.config.js', 'tsconfig.json', 'src', 'app', 'constants', 'components', 'hooks', 'scripts'];
+    const toRemove = ['App.tsx', 'README.md', 'babel.config.js', 'tsconfig.json', 'pnpm-workspace.yaml', 'src', 'app', 'constants', 'components', 'hooks', 'scripts'];
     for (const item of toRemove) {
       const targetPath = path.join(appPath, item);
       try {
@@ -519,24 +519,7 @@ async function run() {
         }
         if (iosExists) {
           console.log(chalk.gray('   🍎 iOS directory created'));
-        }
-        
-        // Auto-install CocoaPods if iOS directory was created on macOS
-        if (iosExists && os.platform() === 'darwin') {
-          console.log(chalk.yellow('\n🍎 iOS directory detected - CocoaPods installation recommended'));
-          
-          const installPods = await askYesNoQuestion(chalk.cyan('📱 Install CocoaPods dependencies now? (Y/n): '), ['y', 'yes', 'n', 'no'], true);
-          
-          if (installPods.toLowerCase() !== 'n' && installPods.toLowerCase() !== 'no') {
-            try {
-              console.log(chalk.cyan('\n📦 Installing CocoaPods dependencies...'));
-              await execa('npx', ['pod-install'], { cwd: appPath, stdio: 'inherit' });
-              console.log(chalk.green('✅ CocoaPods installation completed!'));
-            } catch (error) {
-              console.log(chalk.red('❌ CocoaPods installation failed. You can run it manually later:'));
-              console.log(chalk.yellow('npx pod-install'));
-            }
-          }
+          console.log(chalk.green('   ✅ CocoaPods automatically configured by expo prebuild'));
         }
         
       } catch (error) {

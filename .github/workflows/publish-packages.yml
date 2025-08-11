@@ -1,0 +1,181 @@
+name: 🚀 Publish Updated Packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/*/package.json'
+      - 'packages/**'
+  workflow_dispatch:
+    inputs:
+      force_publish:
+        description: 'Force publish all packages (ignore version checks)'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8'
+
+jobs:
+  detect-changes:
+    name: 🔍 Detect Package Changes
+    runs-on: ubuntu-latest
+    outputs:
+      changed-packages: ${{ steps.changed-packages.outputs.packages }}
+      has-changes: ${{ steps.changed-packages.outputs.has-changes }}
+    steps:
+      - name: 📚 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🔍 Detect changed packages
+        id: changed-packages
+        run: |
+          # Get the last commit that was pushed to main (before current push)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_publish }}" = "true" ]; then
+            echo "Force publish enabled - including all packages"
+            packages=$(find packages -name "package.json" -not -path "*/node_modules/*" | xargs dirname | sed 's/packages\///' | jq -R -s -c 'split("\n")[:-1]')
+          else
+            # Get changed files since last commit
+            if git rev-parse HEAD~1 >/dev/null 2>&1; then
+              changed_files=$(git diff --name-only HEAD~1 HEAD)
+            else
+              # If this is the first commit, get all files
+              changed_files=$(git ls-files)
+            fi
+            
+            echo "Changed files:"
+            echo "$changed_files"
+            
+            # Extract unique package directories from changed files
+            packages=$(echo "$changed_files" | grep -E '^packages/[^/]+/' | sed 's|packages/\([^/]*\)/.*|\1|' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          fi
+          
+          echo "Detected packages: $packages"
+          echo "packages=$packages" >> $GITHUB_OUTPUT
+          
+          # Check if we have any packages to process
+          if [ "$packages" = "[]" ] || [ "$packages" = '[""]' ]; then
+            echo "has-changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+          fi
+
+  publish-packages:
+    name: 📦 Publish Packages
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has-changes == 'true'
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.detect-changes.outputs.changed-packages) }}
+      fail-fast: false
+    steps:
+      - name: 📚 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔍 Check package exists and needs update
+        id: check-package
+        working-directory: packages/${{ matrix.package }}
+        run: |
+          package_name=$(node -p "require('./package.json').name")
+          package_version=$(node -p "require('./package.json').version")
+          
+          echo "Package: $package_name@$package_version"
+          
+          # Check if this exact version already exists on npm
+          if npm view "$package_name@$package_version" version >/dev/null 2>&1; then
+            echo "❌ Version $package_version already exists for $package_name"
+            echo "should-publish=false" >> $GITHUB_OUTPUT
+            echo "reason=version-exists" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Version $package_version is new for $package_name"
+            echo "should-publish=true" >> $GITHUB_OUTPUT
+            echo "reason=new-version" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "package-name=$package_name" >> $GITHUB_OUTPUT
+          echo "package-version=$package_version" >> $GITHUB_OUTPUT
+
+      - name: 🚀 Publish package
+        if: steps.check-package.outputs.should-publish == 'true'
+        working-directory: packages/${{ matrix.package }}
+        run: |
+          echo "Publishing ${{ steps.check-package.outputs.package-name }}@${{ steps.check-package.outputs.package-version }}..."
+          pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: ✅ Publish success
+        if: steps.check-package.outputs.should-publish == 'true'
+        run: |
+          echo "✅ Successfully published ${{ steps.check-package.outputs.package-name }}@${{ steps.check-package.outputs.package-version }}"
+
+      - name: ⏭️ Skip publish
+        if: steps.check-package.outputs.should-publish == 'false'
+        run: |
+          echo "⏭️ Skipping ${{ steps.check-package.outputs.package-name }}@${{ steps.check-package.outputs.package-version }} - ${{ steps.check-package.outputs.reason }}"
+
+  summary:
+    name: 📋 Summary
+    runs-on: ubuntu-latest
+    needs: [detect-changes, publish-packages]
+    if: always()
+    steps:
+      - name: 📋 Job Summary
+        run: |
+          echo "## 📦 Package Publishing Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.detect-changes.outputs.has-changes }}" = "false" ]; then
+            echo "🔍 **No package changes detected** - No packages were published." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🔍 **Detected packages:** ${{ needs.detect-changes.outputs.changed-packages }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "${{ needs.publish-packages.result }}" = "success" ]; then
+              echo "✅ **Publishing completed successfully**" >> $GITHUB_STEP_SUMMARY
+            elif [ "${{ needs.publish-packages.result }}" = "failure" ]; then
+              echo "❌ **Publishing failed** - Check individual job logs for details" >> $GITHUB_STEP_SUMMARY
+            elif [ "${{ needs.publish-packages.result }}" = "cancelled" ]; then
+              echo "🔄 **Publishing was cancelled**" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "⏭️ **No packages needed publishing** - All detected packages are already up to date" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🛠️ Workflow Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "- **Force Publish:** ${{ inputs.force_publish }}" >> $GITHUB_STEP_SUMMARY
+          fi

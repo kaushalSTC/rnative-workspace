@@ -50,9 +50,6 @@ npx @kaushalstc/expo-starter MyAwesomeApp com.company.myawesomeapp
 ```bash
 cd MyAwesomeApp
 
-# Install iOS dependencies (macOS only)
-npm run pod
-
 # Launch on your preferred platform
 npm start        # Start Expo development server
 npm run ios      # iOS Simulator
@@ -91,13 +88,9 @@ npm run web      # Web browser
 npx @kaushalstc/expo-starter MyApp
 ```
 
-2. **Install dependencies**:
+2. **Navigate and launch**:
 ```bash
-cd MyApp && npm run pod
-```
-
-3. **Launch**:
-```bash
+cd MyApp
 npm start        # Start Expo development server
 npm run ios      # iOS Simulator
 npm run android  # Android Emulator
@@ -118,15 +111,6 @@ src/
 └── utils/           # Helpers & hooks
 ```
 
-## 💡 Real-World Use Cases
-
-| Scenario | How This Template Helps |
-|----------|-------------------------|
-| **Startup MVP** | Launch in days instead of weeks |
-| **Enterprise App** | Built-in TypeScript safety |
-| **Hackathon Project** | Skip setup, focus on innovation |
-| **Team Collaboration** | Consistent architecture |
-| **Learning React Native** | Best practices baked-in |
 ## ❤️ Community-Driven Excellence
 
 Join **1,800+ developers** who've shipped apps faster with this template:
@@ -321,21 +305,6 @@ cd android && ./gradlew clean && cd ..
 cd ios && xcodebuild clean && cd ..
 ```
 
-## 👥 Success Stories & Testimonials
-
-> **What developers are saying:**
-
-*"This template saved our startup 2 weeks of development time. The comprehensive scripts are a game-changer!"*  
-**— Sarah Chen, CTO at TechStart**
-
-*"Finally, a React Native template that includes EVERYTHING. The 60+ scripts cover every scenario we encountered."*  
-**— Mike Rodriguez, Senior Mobile Developer**
-
-*"Used this for 3 client projects. The TypeScript + Redux setup is perfect. Clients love the professional architecture."*  
-**— Alex Thompson, Freelance Developer**
-
-*"The cleaning scripts alone have saved me hours of frustration. This template just works."*  
-**— Jennifer Liu, Mobile Team Lead**
 
 ## 📈 Performance & Stats
 
@@ -365,7 +334,6 @@ cd ios && xcodebuild clean && cd ..
 - Add new examples  
 - Improve TypeScript types  
 - Enhance starter components
-- Share your success story
 - Suggest new npm scripts
 
 ## 📄 License
