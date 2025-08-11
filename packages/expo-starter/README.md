@@ -1,28 +1,14 @@
-# 🚀 Expo Pro Starter Template
+# 🚀 STC Expo Starter Template
 
-<div align="center">
+**Internal React Native Expo template for Seventh Triangle Company projects**
 
-[![npm version](https://badge.fury.io/js/%40kaushalSTC%2Fexpo-starter.svg)](https://badge.fury.io/js/%40kaushalSTC%2Fexpo-starter)
-[![Downloads](https://img.shields.io/npm/dm/@kaushalstc/expo-starter.svg)](https://www.npmjs.com/package/@kaushalstc/expo-starter)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
-[![Expo](https://img.shields.io/badge/Expo-SDK%2051+-000020.svg)](https://expo.dev/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/kaushalSTC/expo-starter/graphs/commit-activity)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/kaushalSTC/expo-starter/pulls)
-
-**🎯 The Most Complete Expo Template for Professional Development**
-
-**⚡ Skip 8+ hours of tedious setup. Start shipping features in minutes!**
-
-*Production-ready • TypeScript • Redux Toolkit • EAS Build Ready • Best Practices*
-
-</div>
+*Enterprise-ready • TypeScript • Redux Toolkit • ScaledSheet Styling • Navigation • Best Practices*
 
 ---
 
-## 🌟 What Makes This Special
+## 🌟 What This Template Provides
 
-> **The only Expo template that gives you EVERYTHING out of the box**
+> **Everything STC developers need for rapid Expo app development**
 
 ✨ **35+ Carefully Curated NPM Scripts** for professional development workflow  
 🏢 **Enterprise-grade Architecture** with TypeScript & Redux Toolkit  
@@ -111,38 +97,128 @@ src/
 └── utils/           # Helpers & hooks
 ```
 
-## ❤️ Community-Driven Excellence
+## 📐 ScaledSheet - Responsive UI Made Simple
 
-Join **1,800+ developers** who've shipped apps faster with this template:
+**Why ScaledSheet?** Every STC app needs to work perfectly on all device sizes. ScaledSheet automatically converts numerical values to strings with device-appropriate scaling.
 
-```bash
-# Always get the latest version
-npx @kaushalstc/react-native-starter@latest MyApp
-```
-
-**We're here to support you:**
-- 📚 [Full Documentation](https://github.com/kaushalSTC/react-native-starter/wiki)
-- 🐛 [Issue Tracking](https://github.com/kaushalSTC/react-native-starter/issues)
-- 💬 [Community Discussions](https://github.com/kaushalSTC/react-native-starter/discussions)
-
-## 🌟 Why This Stands Out
+### Basic Usage
 
 ```javascript
-// Example: Pre-configured responsive sizing
-import { scale, verticalScale } from 'react-native-size-matters';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+// ✅ Good - ScaledSheet handles conversion automatically
+const styles = ScaledSheet.create({
   container: {
-    padding: scale(20),       // Responsive horizontal
-    marginTop: verticalScale(10) // Responsive vertical
+    padding: 20,           // → "20@s" → scales horizontally
+    marginTop: 10,         // → "10@vs" → scales vertically  
+    fontSize: 16,          // → "16@ms" → scales with font size
+    borderRadius: 8,       // → "8@s" → scales horizontally
+  },
+  title: {
+    fontSize: 24,          // Automatically becomes "24@ms"
+    marginBottom: 15,      // Automatically becomes "15@vs"
   }
 });
 ```
 
-**You get battle-tested solutions:**  
+### Advanced Scaling Options
+
+```javascript
+// Manual scaling control (when you need it)
+const styles = ScaledSheet.create({
+  // Horizontal scaling for width, padding, margin
+  container: {
+    width: '300@s',        // Scale horizontally
+    paddingHorizontal: '20@s',
+  },
+  
+  // Vertical scaling for height, line height  
+  text: {
+    lineHeight: '24@vs',   // Scale vertically
+    marginVertical: '10@vs',
+  },
+  
+  // Font scaling (recommended for text)
+  title: {
+    fontSize: '18@ms',     // Moderate scale (font-friendly)
+  },
+  
+  // Mixed scaling
+  button: {
+    width: '200@s',        // Horizontal scale
+    height: '44@vs',       // Vertical scale
+    fontSize: '16@ms',     // Font scale
+  }
+});
+```
+
+### ScaledSheet vs Regular StyleSheet
+
+```javascript
+// ❌ Regular StyleSheet - Fixed sizes, poor responsiveness
+const regularStyles = StyleSheet.create({
+  container: {
+    padding: 20,           // Always 20dp, too small on tablets
+    fontSize: 16,          // Always 16sp, hard to read on small phones
+  }
+});
+
+// ✅ ScaledSheet - Responsive across all devices
+const responsiveStyles = ScaledSheet.create({
+  container: {
+    padding: 20,           // Scales to device size automatically
+    fontSize: 16,          // Scales for readability
+  }
+});
+```
+
+### Key Benefits for STC Projects
+
+| Traditional StyleSheet | ScaledSheet | Benefit |
+|----------------------|-------------|----------|
+| `fontSize: 16` | `fontSize: 16` → `"16@ms"` | Text readable on all devices |
+| `padding: 20` | `padding: 20` → `"20@s"` | Touch targets properly sized |
+| `marginTop: 10` | `marginTop: 10` → `"10@vs"` | Consistent spacing |
+| Manual device checks | Automatic scaling | No device-specific code needed |
+
+### Real-World Example
+
+```javascript
+// src/components/ProductCard.js
+import { ScaledSheet } from 'react-native-size-matters';
+
+const styles = ScaledSheet.create({
+  card: {
+    padding: 16,           // Perfect padding on all devices
+    marginBottom: 12,      // Consistent spacing
+    borderRadius: 8,       // Proper corner radius
+    minHeight: 120,        // Adequate touch area
+  },
+  title: {
+    fontSize: 18,          // Readable title text
+    marginBottom: 8,       // Good text separation
+    lineHeight: 24,        // Proper line spacing
+  },
+  price: {
+    fontSize: 16,          // Clear price display
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 14,          // Readable body text
+    lineHeight: 20,        // Comfortable reading
+    marginTop: 8,
+  }
+});
+```
+
+**The Result**: Your UI looks perfect on iPhone SE, iPhone 15 Pro Max, iPad, and Android tablets - without writing device-specific code.
+
+## 🎯 STC Development Standards
+
+**This template follows STC's proven patterns:**  
 ✅ **Tested** with React Native 0.72+  
-✅ **Regularly updated** dependencies  
-✅ **Commercial project** proven  
+✅ **Production-ready** for client projects  
+✅ **Scalable architecture** for team development
 
 ## ⚡ 50+ NPM Scripts - Your Complete Toolkit
 
@@ -306,47 +382,37 @@ cd ios && xcodebuild clean && cd ..
 ```
 
 
-## 📈 Performance & Stats
+## 📈 Template Benefits
 
 | Metric | Value | Impact |
 |--------|-------|--------|
 | **Average Setup Time** | 30 seconds | vs 8+ hours manual setup |
 | **Scripts Included** | 60+ | vs 5-10 in typical projects |
 | **Dependencies Pre-configured** | 15+ | Production-ready out of box |
-| **Developer Satisfaction** | 98% | Based on GitHub feedback |
-| **Projects Created** | 5,000+ | Growing daily |
+| **STC Projects Using Template** | Growing | Faster delivery to clients |
 
-## 🔍 SEO Keywords
+## 🛠️ For STC Developers
 
-*React Native template, React Native starter, TypeScript React Native, Redux Toolkit React Native, React Native boilerplate, React Native CLI, React Native architecture, React Native best practices, React Native development, React Native scripts, React Native automation, React Native project structure, React Native enterprise, React Native production*
+**Getting Help:**
+- Contact the development team for template issues
+- Check internal documentation for project standards
+- Follow STC coding guidelines when extending the template
 
-## 🤝 Contribute & Grow
-
-**Join our movement:**  
-```bash
-# 1. Fork repo
-# 2. Create feature branch
-# 3. Submit PR with improvements
-```
-
-**Every contribution helps:**  
-- Fix typos in docs  
-- Add new examples  
-- Improve TypeScript types  
-- Enhance starter components
-- Suggest new npm scripts
+**Template Maintenance:**
+- Template is maintained by the STC development team
+- Regular updates include latest React Native and Expo versions
+- New features added based on project requirements
 
 ## 📄 License
 
-**MIT License** - Free for personal and commercial use. No attribution required.
+**MIT License** - Free for personal and commercial use.
 
 ---
 
 <div align="center">
 
-**Created with ❤️ by [Kaushal Rathour](https://github.com/kaushalSTC)** 
+**🏢 Seventh Triangle Company - Internal Development Template**
 
-**⭐ If this saved you time, star the repo! ⭐**  
-**Your stars fuel our updates!**
+*Streamlining mobile development for STC projects*
 
 </div>
