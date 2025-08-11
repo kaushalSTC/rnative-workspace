@@ -120,8 +120,8 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          # Try frozen lockfile first, fallback to regular install if needed
-          pnpm install --frozen-lockfile || pnpm install
+          # Install dependencies without frozen lockfile to avoid peerDependency conflicts
+          pnpm install --no-frozen-lockfile
 
       - name: 🔍 Check package exists and needs update
         id: check-package
