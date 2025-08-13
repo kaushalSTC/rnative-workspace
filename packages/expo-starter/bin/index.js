@@ -354,29 +354,26 @@ async function run() {
       });
     };
     
-    // Improved askQuestion with fallback handling for yes/no questions
+    // Improved askQuestion with robust fallback handling for yes/no questions
     const askDeepLinkYesNoQuestion = async (question, validResponses = ['y', 'yes', 'n', 'no'], allowEmpty = true) => {
       let response;
       do {
         response = await askDeepLinkQuestion(question);
         
-        // If empty response and allowed, break the loop
+        // If empty response and allowed, return default 'n'
         if (!response && allowEmpty) {
-          break;
+          return 'n';
         }
         
         // Check if response is valid
         if (response && validResponses.includes(response.toLowerCase())) {
-          break;
+          return response.toLowerCase();
         }
         
         // Invalid response, ask again
-        if (response) {
-          console.error(chalk.red('❌ Invalid response. Please answer with: ' + validResponses.join(', ')));
-        }
-      } while (response || !allowEmpty);
-      
-      return response;
+        console.error(chalk.red('❌ Invalid response. Please answer with: ' + validResponses.join(', ')));
+        console.error(chalk.gray('Press Enter for default (N)'));
+      } while (true);
     };
     
     const configureAppScheme = await askDeepLinkYesNoQuestion(chalk.cyan('📱 Do you want to configure a custom app scheme for deep linking? (y/N): '));
@@ -515,23 +512,20 @@ async function run() {
       do {
         response = await askNativeQuestion(question);
         
-        // If empty response and allowed, break the loop
+        // If empty response and allowed, return default 'n'
         if (!response && allowEmpty) {
-          break;
+          return 'n';
         }
         
         // Check if response is valid
         if (response && validResponses.includes(response.toLowerCase())) {
-          break;
+          return response.toLowerCase();
         }
         
         // Invalid response, ask again
-        if (response) {
-          console.error(chalk.red('❌ Invalid response. Please answer with: ' + validResponses.join(', ')));
-        }
-      } while (response || !allowEmpty);
-      
-      return response;
+        console.error(chalk.red('❌ Invalid response. Please answer with: ' + validResponses.join(', ')));
+        console.error(chalk.gray('Press Enter for default (N)'));
+      } while (true);
     };
     
     const generateNative = await askNativeYesNoQuestion(chalk.cyan('📱 Do you want to generate native Android/iOS directories (expo prebuild)? (y/N): '));

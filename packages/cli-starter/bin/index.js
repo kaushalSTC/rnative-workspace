@@ -199,7 +199,7 @@ async function run() {
       '@react-navigation/native',
       '@react-navigation/stack',
       'react-native-gesture-handler',
-      'react-native-reanimated@3.19.0',
+      'react-native-reanimated',
       'react-native-safe-area-context',
       'react-native-screens',
     ];
@@ -254,43 +254,80 @@ async function run() {
       });
     };
     
-    const configureAppScheme = await askDeepLinkQuestion(chalk.cyan('📱 Do you want to configure a custom app scheme for deep linking? (y/N): '));
+    // Helper function to ask yes/no questions with validation and retry
+    const askYesNoQuestion = async (question, allowEmpty = true) => {
+      let response;
+      do {
+        response = await askDeepLinkQuestion(question);
+        
+        // If empty response and allowed, treat as 'no' (default)
+        if (!response && allowEmpty) {
+          return 'n';
+        }
+        
+        // Check if response is valid
+        const validResponses = ['y', 'yes', 'n', 'no'];
+        if (response && validResponses.includes(response.toLowerCase())) {
+          return response.toLowerCase();
+        }
+        
+        // Invalid response, ask again
+        console.error(chalk.red('❌ Invalid response. Please answer with: y/yes/n/no'));
+        console.error(chalk.gray('Press Enter for default (N)'));
+      } while (true);
+    };
+    
+    const configureAppScheme = await askYesNoQuestion(chalk.cyan('📱 Do you want to configure a custom app scheme for deep linking? (y/N): '));
     let appScheme = null;
     let universalLinkDomain = null;
     
-    if (configureAppScheme.toLowerCase() === 'y' || configureAppScheme.toLowerCase() === 'yes') {
+    if (configureAppScheme === 'y' || configureAppScheme === 'yes') {
       // Validate app scheme with retry logic
       do {
         appScheme = await askDeepLinkQuestion(chalk.cyan(`🔤 Enter your app scheme (e.g., "${appName.toLowerCase()}", "myapp"): `));
         
-        if (appScheme && !validateAppScheme(appScheme)) {
+        // If empty, allow user to skip
+        if (!appScheme) {
+          console.log(chalk.yellow('Skipping app scheme configuration.'));
+          break;
+        }
+        
+        if (!validateAppScheme(appScheme)) {
           console.error(chalk.red('❌ Invalid app scheme!'));
           console.error(chalk.yellow('App scheme must:'));
           console.error(chalk.yellow('  - Start with a letter'));
           console.error(chalk.yellow('  - Be 3-20 characters long'));
           console.error(chalk.yellow('  - Contain only lowercase letters, numbers, and hyphens'));
           console.error(chalk.gray(`  Examples: ${appName.toLowerCase()}, myapp, my-app`));
+          console.error(chalk.cyan('Press Enter to skip or try again:'));
           appScheme = null; // Reset to retry
         }
-      } while (appScheme && !validateAppScheme(appScheme));
+      } while (appScheme !== null && !validateAppScheme(appScheme));
       
       if (appScheme) {
-        const configureUniversalLinks = await askDeepLinkQuestion(chalk.cyan('🌐 Do you want to configure universal links? (y/N): '));
+        const configureUniversalLinks = await askYesNoQuestion(chalk.cyan('🌐 Do you want to configure universal links? (y/N): '));
         
-        if (configureUniversalLinks.toLowerCase() === 'y' || configureUniversalLinks.toLowerCase() === 'yes') {
+        if (configureUniversalLinks === 'y' || configureUniversalLinks === 'yes') {
           // Validate domain with retry logic
           do {
             universalLinkDomain = await askDeepLinkQuestion(chalk.cyan(`🔗 Enter your domain for universal links (e.g., "${appName.toLowerCase()}.com", "myapp.com"): `));
             
-            if (universalLinkDomain && !validateDomain(universalLinkDomain)) {
+            // If empty, allow user to skip
+            if (!universalLinkDomain) {
+              console.log(chalk.yellow('Skipping universal links configuration.'));
+              break;
+            }
+            
+            if (!validateDomain(universalLinkDomain)) {
               console.error(chalk.red('❌ Invalid domain!'));
               console.error(chalk.yellow('Domain must:'));
               console.error(chalk.yellow('  - Be a valid domain format'));
               console.error(chalk.yellow('  - Include a top-level domain (.com, .org, etc.)'));
               console.error(chalk.gray(`  Examples: ${appName.toLowerCase()}.com, mycompany.org, app.example.io`));
+              console.error(chalk.cyan('Press Enter to skip or try again:'));
               universalLinkDomain = null; // Reset to retry
             }
-          } while (universalLinkDomain && !validateDomain(universalLinkDomain));
+          } while (universalLinkDomain !== null && !validateDomain(universalLinkDomain));
         }
         
         console.log(chalk.cyan('⚙️  Configuring deep linking in native files...'));
@@ -512,24 +549,51 @@ ${configSection}
     console.log(chalk.cyan('Project contents:'));
     dirContents.forEach(item => console.log('  -', item));
 
-    // Prompt for CocoaPods installation on macOS
-    const os = require('os');
+    // Prompt for CocoaPods installation on macOS with proper validation
     if (os.platform() === 'darwin') {
       console.log(chalk.yellow('\n🍎 Detected macOS - iOS development available'));
       
-      // Simple prompt using readline
+      // Create readline interface for CocoaPods question
       const readline = require('readline');
-      const rl = readline.createInterface({
+      const podRl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
       });
       
-      const installPods = await new Promise((resolve) => {
-        rl.question(chalk.cyan('📱 Install CocoaPods dependencies now? (y/N): '), (answer) => {
-          rl.close();
-          resolve(answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes');
+      const askPodQuestion = (question) => {
+        return new Promise((resolve) => {
+          podRl.question(question, (answer) => {
+            resolve(answer.trim());
+          });
         });
-      });
+      };
+      
+      // Helper function for yes/no validation with retry
+      const askPodYesNoQuestion = async (question) => {
+        let response;
+        do {
+          response = await askPodQuestion(question);
+          
+          // If empty response, treat as 'no' (default)
+          if (!response) {
+            podRl.close();
+            return false;
+          }
+          
+          // Check if response is valid
+          const validResponses = ['y', 'yes', 'n', 'no'];
+          if (validResponses.includes(response.toLowerCase())) {
+            podRl.close();
+            return response.toLowerCase() === 'y' || response.toLowerCase() === 'yes';
+          }
+          
+          // Invalid response, ask again
+          console.error(chalk.red('❌ Invalid response. Please answer with: y/yes/n/no'));
+          console.error(chalk.gray('Press Enter for default (N)'));
+        } while (true);
+      };
+      
+      const installPods = await askPodYesNoQuestion(chalk.cyan('📱 Install CocoaPods dependencies now? (y/N): '));
       
       if (installPods) {
         try {
@@ -563,7 +627,7 @@ ${configSection}
     console.log(chalk.gray('• Vector icons not showing: Ensure you ran npx react-native link react-native-vector-icons'));
     
     console.log(chalk.yellow('\n🍎 iOS/CocoaPods Issues:'));
-    console.log(chalk.gray('• RNWorklets dependency errors: This template uses react-native-reanimated@3.19.0 to avoid compatibility issues'));
+    console.log(chalk.gray('• RNWorklets dependency errors: This template uses compatible versions automatically'));
     console.log(chalk.gray('• Pod install fails: cd ios && pod install --repo-update'));
     console.log(chalk.gray('• Clean iOS build: cd ios && rm -rf Pods Podfile.lock && pod install'));
     console.log(chalk.gray('• Xcode build failures: Clean build folder (Cmd+Shift+K) and rebuild'));
