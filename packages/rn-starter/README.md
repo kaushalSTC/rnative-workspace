@@ -17,36 +17,73 @@
 
 ## Quick Start
 
+### Basic Usage (Interactive)
 ```bash
 npx @kaushalstc/rn-starter MyAwesomeApp [com.organization.myawesomeapp]
 ```
 
-### Interactive Platform Selection
+### Skip Platform Selection with Flags
+```bash
+# Create React Native CLI project directly
+npx @kaushalstc/rn-starter MyApp --cli
 
-When you run the command, you'll be prompted to choose:
+# Create Expo project directly
+npx @kaushalstc/rn-starter MyApp --expo
 
-1. **React Native CLI** - Bare React Native with full native access
+# With package name
+npx @kaushalstc/rn-starter MyApp com.company.myapp --expo
+```
+
+### Get Help
+```bash
+npx @kaushalstc/rn-starter --help
+```
+
+## Platform Options
+
+You can choose between two platforms either interactively or using flags:
+
+1. **React Native CLI** (`--cli` flag)
+   - Bare React Native with full native access
    - Best for apps requiring custom native modules
    - Full control over native code
    - Direct access to platform APIs
 
-2. **Expo** - Managed workflow with simplified development
+2. **Expo** (`--expo` flag)
+   - Managed workflow with simplified development
    - Great for rapid prototyping
    - Simplified build process
    - Rich ecosystem of pre-built modules
 
-## Usage
+**Interactive Selection**: Without flags, you'll be prompted to choose between CLI and Expo.
 
-### Basic Usage
+## Usage Examples
 
+### Interactive Platform Selection
 ```bash
+# Basic usage - prompts for platform choice
 npx @kaushalstc/rn-starter MyApp
+
+# With package name - prompts for platform choice
+npx @kaushalstc/rn-starter MyApp com.mycompany.myapp
 ```
 
-### With Custom Package Name
-
+### Direct Platform Selection
 ```bash
-npx @kaushalstc/rn-starter MyApp com.mycompany.myapp
+# React Native CLI projects
+npx @kaushalstc/rn-starter MyCliApp --cli
+npx @kaushalstc/rn-starter MyCliApp com.mycompany.mycliapp --cli
+
+# Expo projects
+npx @kaushalstc/rn-starter MyExpoApp --expo
+npx @kaushalstc/rn-starter MyExpoApp com.mycompany.myexpoapp --expo
+```
+
+### Command Reference
+```bash
+# Show help and usage information
+npx @kaushalstc/rn-starter --help
+npx @kaushalstc/rn-starter -h
 ```
 
 ## What's Included

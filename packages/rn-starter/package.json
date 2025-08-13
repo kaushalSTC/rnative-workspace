@@ -1,6 +1,6 @@
 {
   "name": "@kaushalstc/rn-starter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Unified React Native starter - Bootstrap a custom React Native app (CLI or Expo) with advanced UI, deep linking, and comprehensive project setup",
   "bin": {
     "rn-starter": "bin/index.js"

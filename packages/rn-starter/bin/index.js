@@ -282,15 +282,84 @@ const runExpoWorkflow = async (appName, packageName, templateDir) => {
   return { appPath, finalPackageName };
 };
 
+// Parse command line arguments and flags
+const parseArgs = () => {
+  const args = process.argv.slice(2);
+  const flags = {
+    cli: false,
+    expo: false,
+    help: false
+  };
+  const nonFlagArgs = [];
+
+  for (const arg of args) {
+    if (arg === '--cli') {
+      flags.cli = true;
+    } else if (arg === '--expo') {
+      flags.expo = true;
+    } else if (arg === '--help' || arg === '-h') {
+      flags.help = true;
+    } else if (!arg.startsWith('-')) {
+      nonFlagArgs.push(arg);
+    }
+  }
+
+  return { flags, nonFlagArgs };
+};
+
+const showHelp = () => {
+  console.log(chalk.cyan.bold('🚀 React Native Unified Starter'));
+  console.log(chalk.gray('Bootstrap a custom React Native app with your choice of CLI or Expo\n'));
+  
+  console.log(chalk.yellow('Usage:'));
+  console.log('  npx @kaushalstc/rn-starter <AppName> [packageName] [flags]\n');
+  
+  console.log(chalk.yellow('Arguments:'));
+  console.log('  AppName       Name of the app to create (required)');
+  console.log('  packageName   Bundle identifier (optional, e.g., com.company.appname)\n');
+  
+  console.log(chalk.yellow('Flags:'));
+  console.log('  --cli         Skip platform selection, use React Native CLI');
+  console.log('  --expo        Skip platform selection, use Expo');
+  console.log('  --help, -h    Show this help message\n');
+  
+  console.log(chalk.yellow('Examples:'));
+  console.log('  npx @kaushalstc/rn-starter MyApp');
+  console.log('  npx @kaushalstc/rn-starter MyApp com.company.myapp');
+  console.log('  npx @kaushalstc/rn-starter MyApp --cli');
+  console.log('  npx @kaushalstc/rn-starter MyApp com.company.myapp --expo');
+  console.log('  npx @kaushalstc/rn-starter MyApp --help\n');
+  
+  console.log(chalk.gray('Without flags, you\'ll be prompted to choose between CLI and Expo interactively.'));
+};
+
 async function run() {
-  const appName = process.argv[2];
-  const packageName = process.argv[3]; // optional
+  const { flags, nonFlagArgs } = parseArgs();
+  const appName = nonFlagArgs[0];
+  const packageName = nonFlagArgs[1]; // optional
+
+  // Show help if requested
+  if (flags.help) {
+    showHelp();
+    process.exit(0);
+  }
+
+  // Validate conflicting flags
+  if (flags.cli && flags.expo) {
+    console.error(chalk.red('❌ Cannot use both --cli and --expo flags together.'));
+    console.error(chalk.yellow('Please choose one platform or omit flags for interactive selection.'));
+    process.exit(1);
+  }
 
   console.log(chalk.cyan.bold('🚀 React Native Unified Starter'));
-  console.log(chalk.gray('Choose between React Native CLI or Expo to get started!\n'));
+  if (!flags.cli && !flags.expo) {
+    console.log(chalk.gray('Choose between React Native CLI or Expo to get started!\n'));
+  }
 
   if (!appName) {
-    console.error(chalk.red('❌ Please provide an app name.\nUsage: rn-starter AppName [com.organization.appname]'));
+    console.error(chalk.red('❌ Please provide an app name.'));
+    console.error(chalk.yellow('Usage: rn-starter AppName [com.organization.appname] [--cli|--expo]'));
+    console.error(chalk.gray('Use --help for more information.'));
     process.exit(1);
   }
 
@@ -305,41 +374,52 @@ async function run() {
     process.exit(1);
   }
 
-  // Choose platform
-  console.log(chalk.cyan('📱 Choose your React Native platform:'));
-  console.log(chalk.yellow('1. React Native CLI (Bare React Native with full native access)'));
-  console.log(chalk.yellow('2. Expo (Managed workflow with simplified development)'));
-  console.log('');
-  console.log(chalk.gray('React Native CLI is recommended for apps requiring custom native modules,'));
-  console.log(chalk.gray('while Expo is great for rapid prototyping and apps using mostly standard features.'));
-  console.log('');
+  // Determine platform based on flags or interactive selection
+  let isExpo;
+  
+  if (flags.cli) {
+    isExpo = false;
+    console.log(chalk.green('✅ Using React Native CLI (--cli flag)'));
+  } else if (flags.expo) {
+    isExpo = true;
+    console.log(chalk.green('✅ Using Expo (--expo flag)'));
+  } else {
+    // Interactive platform selection
+    console.log(chalk.cyan('📱 Choose your React Native platform:'));
+    console.log(chalk.yellow('1. React Native CLI (Bare React Native with full native access)'));
+    console.log(chalk.yellow('2. Expo (Managed workflow with simplified development)'));
+    console.log('');
+    console.log(chalk.gray('React Native CLI is recommended for apps requiring custom native modules,'));
+    console.log(chalk.gray('while Expo is great for rapid prototyping and apps using mostly standard features.'));
+    console.log('');
 
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  let platformChoice;
-  do {
-    platformChoice = await new Promise((resolve) => {
-      rl.question(chalk.cyan('Enter your choice (1 for CLI, 2 for Expo): '), (answer) => {
-        resolve(answer.trim());
-      });
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
     });
 
-    if (platformChoice === '1' || platformChoice === '2') {
-      break;
-    }
+    let platformChoice;
+    do {
+      platformChoice = await new Promise((resolve) => {
+        rl.question(chalk.cyan('Enter your choice (1 for CLI, 2 for Expo): '), (answer) => {
+          resolve(answer.trim());
+        });
+      });
 
-    console.error(chalk.red('❌ Invalid choice. Please enter 1 for CLI or 2 for Expo.'));
-  } while (true);
+      if (platformChoice === '1' || platformChoice === '2') {
+        break;
+      }
 
-  rl.close();
+      console.error(chalk.red('❌ Invalid choice. Please enter 1 for CLI or 2 for Expo.'));
+    } while (true);
 
-  const isExpo = platformChoice === '2';
+    rl.close();
+
+    isExpo = platformChoice === '2';
+    console.log(chalk.green(`\n✅ Selected: ${isExpo ? 'Expo' : 'React Native CLI'}`));
+  }
+
   const templateDir = path.resolve(__dirname, isExpo ? '../overrides-expo' : '../overrides-cli');
-  
-  console.log(chalk.green(`\n✅ Selected: ${isExpo ? 'Expo' : 'React Native CLI'}`));
 
   try {
     let appPath, finalPackageName;
