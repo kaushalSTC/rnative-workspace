@@ -111,9 +111,23 @@ async function run() {
         if (relativePath) {
           console.log(chalk.gray(`     Copying: ${relativePath}`));
         }
-        return true;
+        // Skip copying the actual .env file, we'll handle .env.example separately
+        return !relativePath.endsWith('.env');
       }
     });
+    
+    // Step 3.1: Handle environment file properly
+    console.log(chalk.cyan('🔧 Setting up environment file...'));
+    const envExamplePath = path.join(templateDir, '.env.example');
+    const envPath = path.join(appPath, '.env');
+    
+    if (await fs.pathExists(envExamplePath)) {
+      // Copy .env.example to .env so users have a working environment file
+      await fs.copy(envExamplePath, envPath);
+      console.log(chalk.green('✅ Created .env file from .env.example template'));
+    } else {
+      console.log(chalk.yellow('⚠️  .env.example template not found'));
+    }
     
     // Verify final state after copy
     const finalFiles = await fs.readdir(appPath);
@@ -325,25 +339,26 @@ async function run() {
     // Step 6: Configure app scheme and universal links
     console.log(chalk.cyan('🔗 Setting up deep linking configuration...'));
     
+    // Create readline interface for deep linking configuration
     const readline = require('readline');
-    const rl = readline.createInterface({
+    const deepLinkRl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
     
-    const askQuestion = (question) => {
+    const askDeepLinkQuestion = (question) => {
       return new Promise((resolve) => {
-        rl.question(question, (answer) => {
+        deepLinkRl.question(question, (answer) => {
           resolve(answer.trim());
         });
       });
     };
     
     // Improved askQuestion with fallback handling for yes/no questions
-    const askYesNoQuestion = async (question, validResponses = ['y', 'yes', 'n', 'no'], allowEmpty = true) => {
+    const askDeepLinkYesNoQuestion = async (question, validResponses = ['y', 'yes', 'n', 'no'], allowEmpty = true) => {
       let response;
       do {
-        response = await askQuestion(question);
+        response = await askDeepLinkQuestion(question);
         
         // If empty response and allowed, break the loop
         if (!response && allowEmpty) {
@@ -364,14 +379,14 @@ async function run() {
       return response;
     };
     
-    const configureAppScheme = await askYesNoQuestion(chalk.cyan('📱 Do you want to configure a custom app scheme for deep linking? (y/N): '));
+    const configureAppScheme = await askDeepLinkYesNoQuestion(chalk.cyan('📱 Do you want to configure a custom app scheme for deep linking? (y/N): '));
     let appScheme = null;
     let universalLinkDomain = null;
     
     if (configureAppScheme.toLowerCase() === 'y' || configureAppScheme.toLowerCase() === 'yes') {
       // Validate app scheme with retry logic
       do {
-        appScheme = await askQuestion(chalk.cyan(`🔤 Enter your app scheme (e.g., "${appName.toLowerCase()}", "myapp"): `));
+        appScheme = await askDeepLinkQuestion(chalk.cyan(`🔤 Enter your app scheme (e.g., "${appName.toLowerCase()}", "myapp"): `));
         
         if (appScheme && !validateAppScheme(appScheme)) {
           console.error(chalk.red('❌ Invalid app scheme!'));
@@ -385,12 +400,12 @@ async function run() {
       } while (appScheme && !validateAppScheme(appScheme));
       
       if (appScheme) {
-        const configureUniversalLinks = await askYesNoQuestion(chalk.cyan('🌐 Do you want to configure universal links? (y/N): '));
+        const configureUniversalLinks = await askDeepLinkYesNoQuestion(chalk.cyan('🌐 Do you want to configure universal links? (y/N): '));
         
         if (configureUniversalLinks.toLowerCase() === 'y' || configureUniversalLinks.toLowerCase() === 'yes') {
           // Validate domain with retry logic
           do {
-            universalLinkDomain = await askQuestion(chalk.cyan(`🔗 Enter your domain for universal links (e.g., "${appName.toLowerCase()}.com", "myapp.com"): `));
+            universalLinkDomain = await askDeepLinkQuestion(chalk.cyan(`🔗 Enter your domain for universal links (e.g., "${appName.toLowerCase()}.com", "myapp.com"): `));
             
             if (universalLinkDomain && !validateDomain(universalLinkDomain)) {
               console.error(chalk.red('❌ Invalid domain!'));
@@ -477,12 +492,53 @@ async function run() {
       }
     }
     
+    // Close deep linking readline interface
+    deepLinkRl.close();
+    
     // Step 7: Generate native directories if requested
-    const generateNative = await askYesNoQuestion(chalk.cyan('📱 Do you want to generate native Android/iOS directories (expo prebuild)? (y/N): '));
+    // Create new readline interface for native directory configuration
+    const nativeRl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+    
+    const askNativeQuestion = (question) => {
+      return new Promise((resolve) => {
+        nativeRl.question(question, (answer) => {
+          resolve(answer.trim());
+        });
+      });
+    };
+    
+    const askNativeYesNoQuestion = async (question, validResponses = ['y', 'yes', 'n', 'no'], allowEmpty = true) => {
+      let response;
+      do {
+        response = await askNativeQuestion(question);
+        
+        // If empty response and allowed, break the loop
+        if (!response && allowEmpty) {
+          break;
+        }
+        
+        // Check if response is valid
+        if (response && validResponses.includes(response.toLowerCase())) {
+          break;
+        }
+        
+        // Invalid response, ask again
+        if (response) {
+          console.error(chalk.red('❌ Invalid response. Please answer with: ' + validResponses.join(', ')));
+        }
+      } while (response || !allowEmpty);
+      
+      return response;
+    };
+    
+    const generateNative = await askNativeYesNoQuestion(chalk.cyan('📱 Do you want to generate native Android/iOS directories (expo prebuild)? (y/N): '));
     
     if (generateNative.toLowerCase() === 'y' || generateNative.toLowerCase() === 'yes') {
       // Ask which platforms to prebuild
-      const platformChoice = await askQuestion(chalk.cyan('📋 Which platforms to prebuild?\n  1. Both Android and iOS (default)\n  2. Android only\n  3. iOS only\nEnter choice (1-3): '));
+      const platformChoice = await askNativeQuestion(chalk.cyan('📋 Which platforms to prebuild?\n  1. Both Android and iOS (default)\n  2. Android only\n  3. iOS only\nEnter choice (1-3): '));
       
       let platforms = [];
       switch (platformChoice.trim()) {
@@ -527,6 +583,9 @@ async function run() {
         console.log(chalk.yellow('You can generate them manually later with: npx expo prebuild'));
       }
     }
+    
+    // Close native readline interface
+    nativeRl.close();
     
     // Step 8: Configure git repository with custom initial commit
     console.log(chalk.cyan('📋 Setting up git repository...'));

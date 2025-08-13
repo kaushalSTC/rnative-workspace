@@ -1,7 +1,7 @@
 {
   "name": "@kaushalstc/expo-starter",
-  "version": "3.2.1",
-  "description": "Bootstrap a custom React Native Expo app with predefined template and dependencies using create-expo-app",
+  "version": "4.0.1",
+  "description": "Bootstrap a custom React Native Expo app with advanced UI, theme system, deep linking, and comprehensive project setup",
   "bin": {
     "expo-starter": "bin/index.js"
   },
@@ -33,7 +33,10 @@
     "starter",
     "typescript",
     "navigation",
-    "redux"
+    "redux",
+    "deep-linking",
+    "theme",
+    "ui-components"
   ],
   "author": {
     "name": "Kaushal Rathour",

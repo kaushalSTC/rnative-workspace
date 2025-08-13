@@ -1,18 +1,40 @@
 {
-  "name": "@kaushalstc/cli-starter",
-  "version": "1.0.1",
-  "description": "CLI starter utilities",
-  "main": "index.js",
+  "name": "@kaushalstc/react-native-starter",
+  "version": "3.0.1",
+  "description": "Bootstrap a custom React Native CLI app with advanced UI, deep linking, and comprehensive project setup",
+  "bin": {
+    "react-native-starter": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "overrides",
+    "README.md",
+    "SCRIPTS.md"
+  ],
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
     "lint": "echo \"No linting configured\" && exit 0",
-    "build": "echo \"No build script configured\" && exit 0",
-    "clean": "echo \"No clean script configured\" && exit 0"
+    "prepare": "echo \"Package prepared for publishing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaushalSTC/react-native-starter.git"
+  },
+  "homepage": "https://github.com/kaushalSTC/react-native-starter#readme",
+  "bugs": {
+    "url": "https://github.com/kaushalSTC/react-native-starter/issues"
   },
   "keywords": [
+    "react-native",
     "cli",
+    "bootstrap",
+    "template",
     "starter",
-    "utilities"
+    "typescript",
+    "navigation",
+    "redux",
+    "deep-linking",
+    "native"
   ],
   "author": {
     "name": "Kaushal Rathour",
@@ -20,9 +42,15 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "execa": "^9.6.0",
+    "fs-extra": "^11.3.0"
   }
 }
