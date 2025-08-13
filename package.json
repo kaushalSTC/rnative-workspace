@@ -10,6 +10,7 @@
     "clean": "pnpm -r run clean",
     "dev": "pnpm -r run dev",
     "expo-starter": "pnpm --filter @kaushalstc/expo-starter run",
+    "rn-starter": "pnpm --filter @kaushalstc/rn-starter run",
     "prepare": "pnpm -r run prepare",
     "version:list": "node scripts/version-bump.js --list",
     "version:help": "node scripts/version-bump.js --help",

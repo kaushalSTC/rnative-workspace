@@ -202,6 +202,7 @@ async function run() {
       'react-native-reanimated',
       'react-native-safe-area-context',
       'react-native-screens',
+      'react-native-worklets',
     ];
 
     const group3 = [

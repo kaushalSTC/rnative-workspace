@@ -1,0 +1,52 @@
+{
+  "scripts": {
+    "start": "react-native start",
+    "start:reset": "react-native start --reset-cache",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "jest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}'",
+    "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'",
+
+    "pod": "npx pod-install",
+    "pod:clean": "cd ios && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData && rm -rf build && cd .. && npx pod-install",
+
+    "android:debug": "cd android && ./gradlew assembleDebug",
+    "android:release": "cd android && ./gradlew assembleRelease",
+    "android:bundle": "cd android && ./gradlew bundleRelease",
+    "android:clean": "cd android && ./gradlew clean",
+    "android:clean-release": "cd android && ./gradlew clean && ./gradlew assembleRelease",
+
+    "ios:debug": "npx react-native build-ios --mode=Debug",
+    "ios:release": "npx react-native build-ios --mode=Release",
+    "ios:archive": "cd ios && xcodebuild -workspace {{APP_NAME}}.xcworkspace -scheme {{APP_NAME}} -configuration Release archive -archivePath {{APP_NAME}}.xcarchive",
+
+    "apk:debug": "cd android && ./gradlew assembleDebug && open app/build/outputs/apk/debug/",
+    "apk:release": "cd android && ./gradlew assembleRelease && open app/build/outputs/apk/release/",
+    "aab:release": "cd android && ./gradlew bundleRelease && open app/build/outputs/bundle/release/",
+
+    "clean": "npm run android:clean && npm run ios:clean && npm run metro:clean && npm run modules:clean",
+    "ios:clean": "cd ios && xcodebuild clean && rm -rf build && rm -rf ~/Library/Developer/Xcode/DerivedData",
+    "metro:clean": "npx react-native start --reset-cache",
+    "modules:clean": "rm -rf node_modules && npm install",
+    "pods:clean": "cd ios && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData && cd .. && npx pod-install",
+    "clean:all": "npm run clean && npm run pods:clean",
+
+    "release:android": "npm run android:clean && npm run android:release",
+    "release:ios": "npm run ios:clean && npm run ios:release",
+
+    "info": "npx react-native info",
+    "doctor": "npx react-native doctor",
+    "flipper": "npx react-native flipper",
+
+    "gradle:wrapper": "cd android && ./gradlew wrapper --gradle-version=8.0.2",
+    "gradle:refresh": "cd android && ./gradlew --refresh-dependencies",
+
+    "metro:clear": "npx react-native start --reset-cache",
+    "watchman:clear": "watchman watch-del-all",
+
+    "postinstall": "npx patch-package"
+  }
+}

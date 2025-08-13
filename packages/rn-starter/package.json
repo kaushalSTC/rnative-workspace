@@ -1,0 +1,60 @@
+{
+  "name": "@kaushalstc/rn-starter",
+  "version": "1.0.0",
+  "description": "Unified React Native starter - Bootstrap a custom React Native app (CLI or Expo) with advanced UI, deep linking, and comprehensive project setup",
+  "bin": {
+    "rn-starter": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "overrides-cli",
+    "overrides-expo",
+    "README.md",
+    "SCRIPTS.md"
+  ],
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"No linting configured\" && exit 0",
+    "prepare": "echo \"Package prepared for publishing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaushalSTC/rn-starter.git"
+  },
+  "homepage": "https://github.com/kaushalSTC/rn-starter#readme",
+  "bugs": {
+    "url": "https://github.com/kaushalSTC/rn-starter/issues"
+  },
+  "keywords": [
+    "react-native",
+    "cli",
+    "expo",
+    "bootstrap",
+    "template",
+    "starter",
+    "typescript",
+    "navigation",
+    "redux",
+    "deep-linking",
+    "native",
+    "ui-components",
+    "unified"
+  ],
+  "author": {
+    "name": "Kaushal Rathour",
+    "url": "https://github.com/kaushalSTC"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "execa": "^9.6.0",
+    "fs-extra": "^11.3.0"
+  }
+}
