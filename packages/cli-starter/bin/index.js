@@ -481,10 +481,10 @@ async function run() {
 ✨ Includes: Navigation, Redux, UI components, build scripts, and more!
 ${configSection}
 
-📎 Template: @kaushalstc/react-native-starter
-🔗 Repository: https://github.com/kaushalSTC/react-native-starter
+📎 Template: @kaushalstc/cli-starter
+🔗 Repository: https://github.com/kaushalSTC/cli-starter
 
-💡 Use 'npx @kaushalstc/react-native-starter' for latest version`;
+💡 Use 'npx @kaushalstc/cli-starter' for latest version`;
       
       await execa('git', ['commit', '-m', commitMessage], { cwd: appPath, stdio: 'pipe' });
       

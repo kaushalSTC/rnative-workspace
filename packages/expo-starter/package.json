@@ -1,6 +1,6 @@
 {
   "name": "@kaushalstc/expo-starter",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Bootstrap a custom React Native Expo app with advanced UI, theme system, deep linking, and comprehensive project setup",
   "bin": {
     "expo-starter": "bin/index.js"
